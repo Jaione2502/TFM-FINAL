@@ -28,16 +28,16 @@ function login() {
 
 <style scoped>
 .login-page {
-  height: 100vh; 
+  height: 100vh; /* ocupa toda la altura de la pantalla */
   display: flex;
-  justify-content: center;
-  align-items: center;   
+  justify-content: center; /* centrado horizontal */
+  align-items: center;     /* centrado vertical */
   background: #f0f2f5;
 }
 
 .login-container {
   width: 100%;
-  max-width: 400px; 
+  max-width: 400px; /* ancho máximo del formulario */
   padding: 2rem;
   background: #fff;
   border-radius: 10px;
@@ -59,7 +59,7 @@ function login() {
   margin: 0.5rem 0;
   padding: 0.8rem;
   border: 1px solid #ccc;
-  border-radius: 0.5rem;
+  border-radius: 6px;
   font-size: 1rem;
 }
 
@@ -69,7 +69,7 @@ function login() {
   background: #4facfe;
   border: none;
   color: white;
-  border-radius: 0.5rem;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 1rem;
   transition: background 0.3s;
@@ -79,7 +79,7 @@ function login() {
   background: #3a7bd5;
 }
 
-
+/* Responsive */
 @media (max-width: 480px) {
   .login-container {
     padding: 1.5rem;
