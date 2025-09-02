@@ -1,0 +1,5 @@
+npm create vite@latest tfm_final -- --template vue
+cd tfm_final
+npm install
+npm install vue-router
+npm run dev
