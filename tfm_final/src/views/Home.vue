@@ -41,47 +41,6 @@
 
 <script setup>
 import Banner from "../components/Banner.vue";
+import "../assets/styles/home.css"; 
 </script>
 
-<style scoped>
-section {
-  margin-top: 2rem;
-  text-align: center;
-}
-.beneficios,
-.recipes {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 3;
-}
-
-.beneficio,
-.recipe {
-    background-color: #e7f7e7;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
-    width: 30rem;
-    text-align: center;
-}
-.recipe-img {
-    max-width: 100%;
-}
-
-.testimonios {
-    background-color: #eee;
-    padding: 3rem 2rem;
-    text-align: center;
-    margin: 1rem;
-}
-
-.testimonio {
-    background-color: white;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
-}
-</style>
