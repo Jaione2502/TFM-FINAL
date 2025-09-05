@@ -1,0 +1,115 @@
+/* Layout general */
+.container {
+  max-width: 800 px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+/* Títulos */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  color: #333;
+}
+h2 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #444;
+}
+
+/* Tarjeta formulario */
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+}
+
+/* Inputs */
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+input:focus,
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botones */
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-primary {
+  background: #007bff;
+  color: white;
+}
+.btn-primary:hover {
+  background: #0056b3;
+}
+.btn-warning {
+  background: #f0ad4e;
+  color: white;
+}
+.btn-warning:hover {
+  background: #d98927;
+}
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+.btn-danger:hover {
+  background: #a71d2a;
+}
+
+/* Listado */
+.listado {
+  margin-top: 20px;
+}
+.categoria-card {
+  background: #fff;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+.categoria-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #222;
+}
+.categoria-card p {
+  margin: 4px 0 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+.acciones button {
+  margin-left: 10px;
+}
+
+/* Mensaje vacío */
+.mensaje-vacio {
+  text-align: center;
+  color: #777;
+  margin-top: 20px;
+  font-size: 1rem;
+}

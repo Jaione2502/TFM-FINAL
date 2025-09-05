@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <!-- Si no está logueado -->
+  
     <div v-if="!isAuthenticated" class="login-container">
       <Login @login-success="handleLogin" />
     </div>
 
-    <!-- Si ya hizo login -->
+   
     <div v-else class="app-layout">
       <Banner :is-authenticated="isAuthenticated" />
 
@@ -35,6 +35,8 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Banner from "./components/Banner.vue";
 import Login from "./views/Login.vue";
+
+
 
 const router = useRouter();
 const isAuthenticated = ref(false);
@@ -100,13 +102,14 @@ function handleLogout() {
   left: 220px; /* al lado del sidebar */
   box-sizing: border-box;
   z-index: 100; /* para que esté sobre contenido */
+  height: 50px
 }
 
 
 
 /* Footer */
 footer {
-  padding: 1rem;
+  padding: 0;
   text-align: center;
   background: #f4f4f4;
 }
