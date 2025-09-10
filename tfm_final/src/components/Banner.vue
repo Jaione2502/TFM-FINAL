@@ -6,7 +6,9 @@
     </button>
 
     <!-- Banner -->
-    <aside :class="['sidebar', { open: drawerOpen, desktop: isDesktop }]" v-if="isAuthenticated">
+
+   <aside   :class="['sidebar', { open: drawerOpen, desktop: isDesktop }]" v-show="auth.isAuthenticated">
+
       <h2 class="sidebar-title">Panel de control</h2>
       <nav>
         <ul>
@@ -78,10 +80,9 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import { auth } from '../auth';
 
-const props = defineProps({
-  isAuthenticated: Boolean,
-});
+
 
 const drawerOpen = ref(false);
 const isDesktop = ref(window.innerWidth >= 768);
@@ -130,12 +131,7 @@ onMounted(() => {
   window.addEventListener("resize", handleResize);
 });
 
-watch(
-  () => props.isAuthenticated,
-  (newVal) => {
-    if (!newVal) drawerOpen.value = false;
-  }
-);
+
 </script>
 
 <style scoped>
