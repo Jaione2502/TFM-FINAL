@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Banner />
+    <Banner auth.isAuthenticated />
     <section>
         <h1>Recetas Creativas y Saludables</h1>
         <p>Descubre cómo cocinar platos modernos y fáciles para cualquier ocasión.</p>
@@ -42,5 +42,7 @@
 <script setup>
 import Banner from "../components/Banner.vue";
 import "../assets/styles/home.css"; 
+import "../auth";
+
 </script>
 
