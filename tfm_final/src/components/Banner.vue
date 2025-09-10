@@ -6,7 +6,9 @@
     </button>
 
     <!-- Banner -->
+
    <aside   :class="['sidebar', { open: drawerOpen, desktop: isDesktop }]" v-show="auth.isAuthenticated">
+
       <h2 class="sidebar-title">Panel de control</h2>
       <nav>
         <ul>
@@ -128,7 +130,6 @@ function handleResize() {
 onMounted(() => {
   window.addEventListener("resize", handleResize);
 });
-
 
 
 </script>

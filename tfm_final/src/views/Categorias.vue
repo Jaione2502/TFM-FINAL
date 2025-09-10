@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <h2>Listado de Categorías</h2>
@@ -24,3 +25,4 @@ export default {
   }
 };
 </script>
+

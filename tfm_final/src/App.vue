@@ -1,9 +1,11 @@
 <template>
   <div id="app">
+
    
     <div v-if="auth.isAuthenticated" class="logout-container">
       <button class="logout-btn" @click="logout">Cerrar sesión</button>
     </div>
+
 
 
     <Banner v-if="auth.isAuthenticated" class="banner-top" />
@@ -28,6 +30,8 @@ import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Banner from "./components/Banner.vue";
 import { auth } from "./auth";
+
+
 
 const router = useRouter();
 
@@ -59,6 +63,16 @@ const logout = () => {
   right: 0;
   z-index: 300;
   padding: 0.5rem 1rem;
+
+}
+
+
+
+/* Footer */
+footer {
+  padding: 0;
+  text-align: center;
+  background: #f4f4f4;
 }
 
 .logout-btn {

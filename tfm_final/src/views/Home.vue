@@ -42,6 +42,7 @@
 <script setup>
 import Banner from "../components/Banner.vue";
 import "../assets/styles/home.css"; 
+
 import "../auth";
 
 </script>

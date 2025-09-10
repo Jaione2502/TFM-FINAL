@@ -6,6 +6,7 @@ import { initAuth } from "./auth";
 
 initAuth(); 
 
+
 createApp(App).use(router).mount("#app");
 
 

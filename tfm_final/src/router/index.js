@@ -23,6 +23,7 @@ const router = createRouter({
 });
 
 
+
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
     next({ name: "Login" }); // protege rutas privadas
