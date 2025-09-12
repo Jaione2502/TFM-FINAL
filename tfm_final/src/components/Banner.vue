@@ -22,7 +22,7 @@
             <ul v-show="showIngredientes" class="submenu">
               <li><RouterLink :to="{ name: 'listar', params: { tipo: 'ingredientes' }}">Listar</RouterLink></li>
               <li><RouterLink to="/ingredientes">Nuevo</RouterLink></li>
-              <li><RouterLink to="/buscar">Buscar</RouterLink></li>
+              <li><RouterLink to="{ name: 'buscar', params: { tipo: 'ingredientes' }}">Buscar</RouterLink></li>
             </ul>
           </li>
           <li>
@@ -33,7 +33,7 @@
             <ul v-show="showCategorias" class="submenu">
               <li><RouterLink :to="{ name: 'listar', params: { tipo: 'categorias' }}">Listar</RouterLink></li>
               <li><RouterLink to="/categorias">Nuevo</RouterLink></li>
-              <li><RouterLink to="/buscar">Buscar</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'categorias' }}">Buscar</RouterLink></li>
             </ul>
           </li>
           <li>
@@ -44,7 +44,7 @@
             <ul v-show="showDietas" class="submenu">
               <li><RouterLink :to="{ name: 'listar', params: { tipo: 'dietas' }}">Listar</RouterLink></li>
               <li><RouterLink to="/dietas">Nueva</RouterLink></li>
-              <li><RouterLink to="/buscar">Buscar</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'dietas' }}">Buscar</RouterLink></li>
             </ul>
           </li>
           <li>
@@ -55,7 +55,7 @@
             <ul v-show="showRecetas" class="submenu">
               <li><RouterLink :to="{ name: 'listar', params: { tipo: 'recetas' }}">Listar</RouterLink></li>
               <li><RouterLink to="/recetas">Nueva</RouterLink></li>
-              <li><RouterLink to="/buscar">Buscar</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'recetas' }}">Buscar</RouterLink></li>
             </ul>
           </li>
           <li>
@@ -66,7 +66,7 @@
             <ul v-show="showMenus" class="submenu">
               <li><RouterLink :to="{ name: 'listar', params: { tipo: 'menus' }}">Listar</RouterLink></li>
               <li><RouterLink to="/menus">Nuevo</RouterLink></li>
-              <li><RouterLink to="/buscar">Buscar</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'menus' }}">Buscar</RouterLink></li>
             </ul>
           </li>
         </ul>

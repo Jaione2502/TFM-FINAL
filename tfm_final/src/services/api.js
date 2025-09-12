@@ -16,7 +16,7 @@ export async function login(email, password) {
 }
 
 
-// Obtener categorías (requiere token)
+
 export async function getCategorias() {
   const token = localStorage.getItem('token');
 
@@ -33,3 +33,21 @@ export async function getCategorias() {
 
   return res.json();
 }
+
+export async function getCategoriasByID(id) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`http://localhost:8000/api/categoria/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener la categoría con ID ' + id);
+  }
+  
+  return res.json();
+}
+

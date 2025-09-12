@@ -1,67 +1,107 @@
+<template> 
+  <div class="buscador-container"> 
+    <h1>Buscador de {{ tipo }}</h1> 
+    <div class="buscador-form"> 
+      <input type="number" v-model="id" placeholder="Introduce un ID" @keyup.enter="cargarDatos(tipo)" /> 
+      <button @click="cargarDatos(tipo)">Buscar</button> 
+    </div> 
+
+    <div v-if="resultado" class="resultado-card"> 
+        <h2>{{ resultado.nombre }}</h2> 
+        </div> 
+        <p v-else-if="buscado"> No se encontró ningun@ {{ tipo }}</p> 
+    </div> 
+</template>
+
+
 <script setup>
-import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { getCategoriasByID } from "../services/api.js";
+import "../assets/styles/Buscar.css";
 
 const route = useRoute();
-const items = ref([]); // aquí guardamos los datos
+const tipo = ref(route.params.tipo);
+const id = ref("");
 
 
-
-function fetchIngredientes() {
-  items.value = ["Ingrediente 1", "Ingrediente 2", "Ingrediente 3"];
-}
-
-function fetchCategorias() {
-  items.value = ["Categoría 1", "Categoría 2", "Categoría 3"];
-}
-
-function fetchDietas() {
-  items.value = ["Dieta 1", "Dieta 2", "Dieta 3"];
-}
-
-function fetchRecetas() {
-  items.value = ["Receta 1", "Receta 2", "Receta 3"];
-}
-
-function fetchMenus() {
-  items.value = ["Menu 1", "Menu 2", "Menu 3"];
-}
+const resultado = ref(null);
+const buscado = ref(false);
 
 
-
-// Controlador según el tipo
-function cargarDatos(tipo) {
-  if (tipo === "ingredientes") {
-    fetchCategorias();
-  } else if (tipo === "categorias") {
-    fetchIngredientes();
-  } else if (tipo === "dietas") {
-    fetchDietas();
-  } else if (tipo === "recetas") {
-    fetchRecetas();
-  } else if (tipo === "menus") {
-    fetchMenus();
-  } else {
-    items.value = [];
+async function BuscarCategoria() {
+  try {
+    const res = await getCategoriasByID(id.value);
+    if (res) {
+      resultado.value = res;
+      buscado.value = true;
+    } else {
+      resultado.value = null;
+      buscado.value = true;
+    }
+  } catch (err) {
+    console.error("Error cargando categorías:", err);
+    resultado.value = null;
+    buscado.value = true;
   }
 }
 
-// Según lo que estemos buscando llamaremos a un lado u a otro
+async function fetchIngredientes() {
+  console.log("Aquí llamarías a getIngredientes()");
+  resultado.value = { id: id.value, nombre: "Ingrediente de ejemplo" };
+  buscado.value = true;
+}
+
+async function fetchDietas() {
+  console.log("Aquí llamarías a getDietas()");
+  resultado.value = { id: id.value, nombre: "Dieta de ejemplo" };
+  buscado.value = true;
+}
+
+async function fetchRecetas() {
+  console.log("Aquí llamarías a getRecetas()");
+  resultado.value = { id: id.value, nombre: "Receta de ejemplo" };
+  buscado.value = true;
+}
+
+async function fetchMenus() {
+  console.log("Aquí llamarías a getMenus()");
+  resultado.value = { id: id.value, nombre: "Menú de ejemplo" };
+  buscado.value = true;
+}
+
+// Función principal que decide qué fetch ejecutar
+async function cargarDatos(tipo) {
+  resultado.value = null;
+  buscado.value = false;
+
+  switch (tipo) {
+    case "categorias":
+      await BuscarCategoria();
+      break;
+    case "ingredientes":
+      await fetchIngredientes();
+      break;
+    case "dietas":
+      await fetchDietas();
+      break;
+    case "recetas":
+      await fetchRecetas();
+      break;
+    case "menus":
+      await fetchMenus();
+      break;
+    default:
+      console.warn("Tipo no reconocido");
+  }
+}
+
+// Observa cambios en la ruta
 watch(
   () => route.params.tipo,
-  (nuevo) => {
-    console.log("Cambio a:", nuevo);
-    cargarDatos(nuevo);
-  },
-  { immediate: true } 
+  (nuevoTipo) => {
+    tipo.value = nuevoTipo;
+    cargarDatos(tipo.value);
+  }
 );
 </script>
-
-<template>
-  <div>
-    <h1>Listar {{ route.params.tipo }}</h1>
-    <ul>
-      <li v-for="(item, i) in items" :key="i">{{ item }}</li>
-    </ul>
-  </div>
-</template>
