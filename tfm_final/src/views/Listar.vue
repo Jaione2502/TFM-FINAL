@@ -1,67 +1,80 @@
+<template>
+  <div class="listar-container">
+    <h1>Listado de {{ tipo }}</h1>
+
+    <div class="card-grid">
+      <div v-for="item in items" :key="item.id" class="card">
+        <h2 class="card-title">{{ item.nombre }}</h2>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
-import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { getCategorias } from "../services/api.js";
+import "../assets/styles/Listar.css";
 
 const route = useRoute();
-const items = ref([]); // aquí guardamos los datos
+const items = ref([]);
+const tipo = ref(route.params.tipo);
 
-// llamamos al back para que en función de lo que queramos mostrar lo listemos
 
-function fetchIngredientes() {
-  items.value = ["Ingrediente 1", "Ingrediente 2", "Ingrediente 3"];
+async function ListarCategorias() {
+  try {
+    items.value = await getCategorias();
+  } catch (err) {
+    console.error("Error cargando categorías:", err);
+  }
 }
 
-function fetchCategorias() {
-  items.value = ["Categoría 1", "Categoría 2", "Categoría 3"];
+async function ListarIngredientes() {
+  console.log("Aquí llamarías a getIngredientes()");
+  items.value = []; 
 }
 
-function fetchDietas() {
-  items.value = ["Dieta 1", "Dieta 2", "Dieta 3"];
+async function ListarDietas() {
+  console.log("Aquí llamarías a getDietas()");
+  items.value = [];
 }
 
-function fetchRecetas() {
-  items.value = ["Receta 1", "Receta 2", "Receta 3"];
+async function ListarRecetas() {
+  console.log("Aquí llamarías a getRecetas()");
+  items.value = [];
 }
 
-function fetchMenus() {
-  items.value = ["Menu 1", "Menu 2", "Menu 3"];
+async function ListarMenus() {
+  console.log("Aquí llamarías a getMenus()");
+  items.value = [];
 }
 
 
-
-// Controlador según el tipo
-function cargarDatos(tipo) {
+async function cargarDatos(tipo) {
   if (tipo === "ingredientes") {
-    fetchCategorias();
+    await ListarIngredientes();
   } else if (tipo === "categorias") {
-    fetchIngredientes();
+    await ListarCategorias();
   } else if (tipo === "dietas") {
-    fetchDietas();
+    await ListarDietas();
   } else if (tipo === "recetas") {
-    fetchRecetas();
+    await ListarRecetas();
   } else if (tipo === "menus") {
-    fetchMenus();
+    await ListarMenus();
   } else {
     items.value = [];
   }
 }
 
-// Observa cambios en el parámetro `tipo`
+
+cargarDatos(tipo.value);
+
+
 watch(
   () => route.params.tipo,
-  (nuevo) => {
-    console.log("Cambio a:", nuevo);
-    cargarDatos(nuevo);
-  },
-  { immediate: true } // también lo ejecuta al montar
+  (nuevoTipo) => {
+    tipo.value = nuevoTipo;
+    cargarDatos(tipo.value);
+  }
 );
 </script>
-
-<template>
-  <div>
-    <h1>Listar {{ route.params.tipo }}</h1>
-    <ul>
-      <li v-for="(item, i) in items" :key="i">{{ item }}</li>
-    </ul>
-  </div>
-</template>
