@@ -46,25 +46,25 @@ async function BuscarCategoria() {
   }
 }
 
-async function fetchIngredientes() {
+async function BuscarIngredientes() {
   console.log("Aquí llamarías a getIngredientes()");
   resultado.value = { id: id.value, nombre: "Ingrediente de ejemplo" };
   buscado.value = true;
 }
 
-async function fetchDietas() {
+async function BuscarDietas() {
   console.log("Aquí llamarías a getDietas()");
   resultado.value = { id: id.value, nombre: "Dieta de ejemplo" };
   buscado.value = true;
 }
 
-async function fetchRecetas() {
+async function BuscarRecetas() {
   console.log("Aquí llamarías a getRecetas()");
   resultado.value = { id: id.value, nombre: "Receta de ejemplo" };
   buscado.value = true;
 }
 
-async function fetchMenus() {
+async function BuscarMenus() {
   console.log("Aquí llamarías a getMenus()");
   resultado.value = { id: id.value, nombre: "Menú de ejemplo" };
   buscado.value = true;
@@ -80,16 +80,16 @@ async function cargarDatos(tipo) {
       await BuscarCategoria();
       break;
     case "ingredientes":
-      await fetchIngredientes();
+      await BuscarIngredientes();
       break;
     case "dietas":
-      await fetchDietas();
+      await BuscarDietas();
       break;
     case "recetas":
-      await fetchRecetas();
+      await BuscarRecetas();
       break;
     case "menus":
-      await fetchMenus();
+      await BuscarMenus();
       break;
     default:
       console.warn("Tipo no reconocido");
