@@ -30,7 +30,7 @@ async function ListarCategorias() {
   }
 }
 
-async function ListarIngredientes() {
+async function ListarIngredientes()) {
   try {
     items.value = await getIngredientes();
   } catch (err) {

@@ -14,7 +14,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategorias } from "../services/api.js";
-import { getIngredientes } from "../services/api.js";
+import { getCategorias } from "../services/api.js";
 import "../assets/styles/Listar.css";
 
 const route = useRoute();
@@ -31,11 +31,8 @@ async function ListarCategorias() {
 }
 
 async function ListarIngredientes() {
-  try {
-    items.value = await getIngredientes();
-  } catch (err) {
-    console.error("Error cargando ingredientes:", err);
-  }
+  console.log("Aquí llamarías a getIngredientes()");
+  items.value = []; 
 }
 
 async function ListarDietas() {

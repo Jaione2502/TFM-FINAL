@@ -51,36 +51,3 @@ export async function getCategoriasByID(id) {
   return res.json();
 }
 
-export async function getIngredientes() {
-  const token = localStorage.getItem('token');
-
-  const res = await fetch('http://localhost:8000/api/ingredientes', {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error('Error al obtener ingredientes');
-  }
-
-  return res.json();
-}
-
-export async function getIngredientesByID(id) {
-  const token = localStorage.getItem('token');
-
-  const res = await fetch(`http://localhost:8000/api/ingredientes/${id}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error('Error al obtener el ingrediente con ID ' + id);
-  }
-  
-  return res.json();
-}

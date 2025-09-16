@@ -30,11 +30,11 @@ async function ListarCategorias() {
   }
 }
 
-async function ListarIngredientes() {
+async function ListarIngredientes()) {
   try {
-    items.value = await getIngredientes();
+    items.value = await getIngredientes());
   } catch (err) {
-    console.error("Error cargando ingredientes:", err);
+    console.error("Error cargando categorías:", err);
   }
 }
 

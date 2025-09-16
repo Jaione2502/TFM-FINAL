@@ -51,7 +51,7 @@ export async function getCategoriasByID(id) {
   return res.json();
 }
 
-export async function getIngredientes() {
+export async function getIngredientesingredientes() {
   const token = localStorage.getItem('token');
 
   const res = await fetch('http://localhost:8000/api/ingredientes', {
