@@ -2,7 +2,6 @@
   margin-left: 220px; 
   padding: 20px;
   max-width: 600px;
-  margin: 20px auto;
 }
 
 .buscador-form {
@@ -37,5 +36,5 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   max-width: 300px;
-  width: 20rem
+    width: 20rem
 }

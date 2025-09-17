@@ -16,7 +16,12 @@
 
       <div class="form-group">
         <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" v-model="fecha" required />
+        <input
+          type="date"
+          id="fecha"
+          v-model="fecha"
+          required
+        />
       </div>
 
       <button type="submit">Guardar Menú</button>
@@ -41,7 +46,8 @@ const fecha = ref("");
 const mensaje = ref("");
 const exito = ref(false);
 
-const usuarioId = localStorage.getItem("user_id");
+// Si guardas el id de usuario al iniciar sesión, recógelo aquí:
+const usuarioId = localStorage.getItem("user_id"); // ajusta a tu app
 
 async function guardarMenu() {
   if (!nombre.value || !fecha.value) {
@@ -52,7 +58,7 @@ async function guardarMenu() {
 
   try {
     const res = await NuevoMenu({
-      usuario_id: usuarioId,
+      usuario_id: usuarioId,        // si tu backend usa auth()->id(), puedes omitirlo
       nombre: nombre.value,
       fecha: fecha.value,
     });
@@ -62,6 +68,8 @@ async function guardarMenu() {
 
     nombre.value = "";
     fecha.value = "";
+
+    // router.push({ name: "menus.list" });
   } catch (err) {
     console.error(err);
     mensaje.value = err?.message || "Error al crear el menú";

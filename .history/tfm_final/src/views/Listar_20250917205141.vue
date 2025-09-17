@@ -10,7 +10,6 @@
         @click="irAEdicion(item)" >
         <h2 class="card-title">{{ item.nombre }}</h2>
         <p>{{ item.descripcion }}</p>
-        <p>{{ item.unidad_medida }}</p>
       </div>
     </div>
   </div>
@@ -21,7 +20,6 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";  // 👈 importar router
 import { getCategorias } from "../services/api.js";
 import { getIngredientes } from "../services/api.js";
-import { getMenus } from "../services/api.js";
 import "../assets/styles/Listar.css";
 
 const route = useRoute();

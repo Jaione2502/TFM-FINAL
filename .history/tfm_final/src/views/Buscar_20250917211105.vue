@@ -17,8 +17,6 @@
       <p v-if="resultado.unidad_medida">
         Unidad de medida: {{ resultado.unidad_medida }}
       </p>
-      <p v-if="resultado.fecha">Fecha: {{ resultado.fecha }}</p>
-      <p v-if="resultado.usuario_id">Usuario ID: {{ resultado.usuario_id }}</p>
     </div>
     <p v-else-if="buscado">No se encontró ningun@ {{ tipo }}</p>
   </div>

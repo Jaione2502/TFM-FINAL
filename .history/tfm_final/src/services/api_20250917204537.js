@@ -86,41 +86,6 @@ export async function getIngredientesByID(id) {
   return res.json();
 }
 
-export async function getMenus() {
-  const token = localStorage.getItem('token');
-
-  const res = await fetch('http://localhost:8000/api/menus', {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error('Error al obtener menús');
-  }
-
-  return res.json();
-}
-
-export async function getMenuByID(id) {
-  const token = localStorage.getItem('token');
-
-  const res = await fetch(`http://localhost:8000/api/menus/${id}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error('Error al obtener el menú con ID ' + id);
-  }
-
-  return res.json();
-}
-
-
 
 export async function NuevaCategoria({ nombre, descripcion }) {
   const token = localStorage.getItem('token');
@@ -182,7 +147,7 @@ export async function NuevoMenu({ usuario_id, nombre, fecha }) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      usuario_id: usuario_id ?? null,
+      usuario_id: usuario_id ?? null, // si el backend usa auth()->id() puedes quitarlo
       nombre: nombre,
       fecha: fecha
     })

@@ -16,7 +16,12 @@
 
       <div class="form-group">
         <label for="fecha">Fecha:</label>
-        <input type="date" id="fecha" v-model="fecha" required />
+        <input
+          type="date"
+          id="fecha"
+          v-model="fecha"
+          required
+        />
       </div>
 
       <button type="submit">Guardar Menú</button>
@@ -52,7 +57,7 @@ async function guardarMenu() {
 
   try {
     const res = await NuevoMenu({
-      usuario_id: usuarioId,
+      usuario_id: localStorage.getItem("user_id") ?? null,      
       nombre: nombre.value,
       fecha: fecha.value,
     });
@@ -62,6 +67,8 @@ async function guardarMenu() {
 
     nombre.value = "";
     fecha.value = "";
+
+    
   } catch (err) {
     console.error(err);
     mensaje.value = err?.message || "Error al crear el menú";
