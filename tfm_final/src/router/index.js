@@ -8,14 +8,14 @@ import { auth } from "../auth.js"
 const routes = [
   { path: "/home", name: "Home", component: Home, meta: { requiresAuth: true } },
   { path: "/politicas", component: Politicas, meta: { requiresAuth: true } },
-  { path: '/login', name: 'Login', component: Login  },
-  { path: "/categorias", component: Categorias, meta: { requiresAuth: true }},
-  { path: "/:tipo/listar", name: "listar", component: () => import("../views/Listar.vue")},
-  { path: "/:tipo/buscar", name: "buscar", component: () => import("../views/Buscar.vue"),
-  props: true
-}
-
+  { path: "/login", name: "Login", component: Login },
+  { path: "/categorias", component: Categorias, meta: { requiresAuth: true } },
+  { path: "/:tipo/listar", name: "listar", component: () => import("../views/Listar.vue") },
+  { path: "/:tipo/buscar", name: "buscar", component: () => import("../views/Buscar.vue"), props: true },
+  { path: "/:tipo/editar/:id", name: "edicion", component: () => import("../views/Edicion.vue"), props: true, meta: { requiresAuth: true } }
 ];
+
+
 
 const router = createRouter({
   history: createWebHistory(),
