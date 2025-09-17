@@ -49,7 +49,7 @@ async function BuscarCategoria() {
 
 async function BuscarIngredientes() {
   try {
-    const res = await getIngredientesByID(id.value);
+    const res = await getIngredienteByID(id.value);
     if (res) {
       resultado.value = res;
       buscado.value = true;

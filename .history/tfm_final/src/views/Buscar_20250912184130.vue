@@ -18,7 +18,6 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategoriasByID } from "../services/api.js";
-import { getIngredientesByID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();
@@ -48,20 +47,9 @@ async function BuscarCategoria() {
 }
 
 async function BuscarIngredientes() {
-  try {
-    const res = await getIngredientesByID(id.value);
-    if (res) {
-      resultado.value = res;
-      buscado.value = true;
-    } else {
-      resultado.value = null;
-      buscado.value = true;
-    }
-  } catch (err) {
-    console.error("Error cargando ingredientes:", err);
-    resultado.value = null;
-    buscado.value = true;
-  }
+  console.log("Aquí llamarías a getIngredientes()");
+  resultado.value = { id: id.value, nombre: "Ingrediente de ejemplo" };
+  buscado.value = true;
 }
 
 async function BuscarDietas() {

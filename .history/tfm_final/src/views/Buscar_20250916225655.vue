@@ -47,7 +47,7 @@ async function BuscarCategoria() {
   }
 }
 
-async function BuscarIngredientes() {
+async function BuscarIngrediente() {
   try {
     const res = await getIngredientesByID(id.value);
     if (res) {
@@ -58,7 +58,7 @@ async function BuscarIngredientes() {
       buscado.value = true;
     }
   } catch (err) {
-    console.error("Error cargando ingredientes:", err);
+    console.error("Error cargando categorías:", err);
     resultado.value = null;
     buscado.value = true;
   }

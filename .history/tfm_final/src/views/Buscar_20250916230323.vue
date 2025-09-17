@@ -18,7 +18,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategoriasByID } from "../services/api.js";
-import { getIngredientesByID } from "../services/api.js";
+import { getIngredientesyID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();
@@ -49,7 +49,7 @@ async function BuscarCategoria() {
 
 async function BuscarIngredientes() {
   try {
-    const res = await getIngredientesByID(id.value);
+    const res = await getIngredienteByID(id.value);
     if (res) {
       resultado.value = res;
       buscado.value = true;

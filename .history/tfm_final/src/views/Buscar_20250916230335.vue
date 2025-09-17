@@ -18,7 +18,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategoriasByID } from "../services/api.js";
-import { getIngredientesByID } from "../services/api.js";
+import { getIngredientesyID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();

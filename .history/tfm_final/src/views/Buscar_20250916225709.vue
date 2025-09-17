@@ -47,7 +47,7 @@ async function BuscarCategoria() {
   }
 }
 
-async function BuscarIngredientes() {
+async function BuscarIngrediente() {
   try {
     const res = await getIngredientesByID(id.value);
     if (res) {
