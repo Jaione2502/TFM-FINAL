@@ -8,6 +8,7 @@
 
     <div v-if="resultado" class="resultado-card"> 
         <h2>{{ resultado.nombre }}</h2> 
+         <p>{{ resultado.descripcion }}</p>
         </div> 
         <p v-else-if="buscado"> No se encontró ningun@ {{ tipo }}</p> 
     </div> 
@@ -82,7 +83,7 @@ async function BuscarMenus() {
   buscado.value = true;
 }
 
-// Función principal que decide qué fetch ejecutar
+// En base a donde se ha seleccionado buscaremos un elemento u otro
 async function cargarDatos(tipo) {
   resultado.value = null;
   buscado.value = false;
@@ -108,7 +109,7 @@ async function cargarDatos(tipo) {
   }
 }
 
-// Observa cambios en la ruta
+
 watch(
   () => route.params.tipo,
   (nuevoTipo) => {
