@@ -8,7 +8,6 @@
 
     <div v-if="resultado" class="resultado-card"> 
         <h2>{{ resultado.nombre }}</h2> 
-         <p>{{ resultado.descripcion }}</p>
         </div> 
         <p v-else-if="buscado"> No se encontró ningun@ {{ tipo }}</p> 
     </div> 
@@ -19,7 +18,7 @@
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategoriasByID } from "../services/api.js";
-import { getIngredientesByID } from "../services/api.js";
+import { getIngredientesyID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();
@@ -83,7 +82,7 @@ async function BuscarMenus() {
   buscado.value = true;
 }
 
-// En base a donde se ha seleccionado buscaremos un elemento u otro
+// Función principal que decide qué fetch ejecutar
 async function cargarDatos(tipo) {
   resultado.value = null;
   buscado.value = false;
@@ -109,7 +108,7 @@ async function cargarDatos(tipo) {
   }
 }
 
-
+// Observa cambios en la ruta
 watch(
   () => route.params.tipo,
   (nuevoTipo) => {
