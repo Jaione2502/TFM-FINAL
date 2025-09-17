@@ -3,7 +3,6 @@ import Home from "../views/Home.vue";
 import Politicas from "../views/Politicas.vue";
 import Categorias from "../views/Categorias.vue";
 import Ingredientes from "../views/Ingredientes.vue"
-import Menús from "../views/Menus.vue";
 import Login from "../views/Login.vue";
 import { auth } from "../auth.js"
 

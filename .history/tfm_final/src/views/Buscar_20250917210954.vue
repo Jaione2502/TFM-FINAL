@@ -14,11 +14,7 @@
     <div v-if="resultado" class="resultado-card">
       <h2>{{ resultado.nombre }}</h2>
       <p>{{ resultado.descripcion }}</p>
-      <p v-if="resultado.unidad_medida">
-        Unidad de medida: {{ resultado.unidad_medida }}
-      </p>
-      <p v-if="resultado.fecha">Fecha: {{ resultado.fecha }}</p>
-      <p v-if="resultado.usuario_id">Usuario ID: {{ resultado.usuario_id }}</p>
+      <p>{{ resultado.unidad_medida }}</p>
     </div>
     <p v-else-if="buscado">No se encontró ningun@ {{ tipo }}</p>
   </div>
@@ -29,7 +25,6 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategoriasByID } from "../services/api.js";
 import { getIngredientesByID } from "../services/api.js";
-import { getMenuByID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();

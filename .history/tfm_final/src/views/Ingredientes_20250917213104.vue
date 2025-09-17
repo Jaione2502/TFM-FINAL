@@ -30,7 +30,7 @@
           type="text"
           id="unidad_medida"
           v-model="unidad_medida"
-          placeholder="Ej: gramos, litros..."
+          placeholder="Ej: gramos, litros, cucharadas..."
           required
         />
       </div>
@@ -54,7 +54,6 @@ const router = useRouter();
 
 const nombre = ref("");
 const descripcion = ref("");
-const unidad_medida = ref("");
 const mensaje = ref("");
 const exito = ref(false);
 
@@ -74,7 +73,8 @@ async function guardarIngrediente() {
 
     mensaje.value = res.message || "Ingrediente creado correctamente";
     exito.value = true;
-    
+
+    // Limpiar formulario
     nombre.value = "";
     descripcion.value = "";
   } catch (err) {

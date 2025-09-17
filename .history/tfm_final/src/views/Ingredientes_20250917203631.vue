@@ -3,6 +3,7 @@
     <h1>Nuevo Ingrediente</h1>
 
     <form @submit.prevent="guardarIngrediente" class="formulario">
+     
       <div class="form-group">
         <label for="nombre">Nombre:</label>
         <input
@@ -14,6 +15,7 @@
         />
       </div>
 
+      
       <div class="form-group">
         <label for="descripcion">Descripción:</label>
         <textarea
@@ -24,21 +26,12 @@
         ></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="unidad_medida">Unidad de medida:</label>
-        <input
-          type="text"
-          id="unidad_medida"
-          v-model="unidad_medida"
-          placeholder="Ej: gramos, litros..."
-          required
-        />
-      </div>
-
+      
       <button type="submit">Guardar Ingrediente</button>
     </form>
 
-    <p v-if="mensaje" :class="{ exito: exito, error: !exito }">
+   
+    <p v-if="mensaje" :class="{'exito': exito, 'error': !exito}">
       {{ mensaje }}
     </p>
   </div>
@@ -47,19 +40,19 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { NuevoIngrediente } from "../services/api.js";
-import "../assets/styles/Categorias.css";
+import { NuevoIngrediente } from "../services/api.js"; 
+import "../assets/styles/Categorias.css"; 
 
 const router = useRouter();
 
 const nombre = ref("");
 const descripcion = ref("");
-const unidad_medida = ref("");
 const mensaje = ref("");
 const exito = ref(false);
 
+
 async function guardarIngrediente() {
-  if (!nombre.value || !descripcion.value || !unidad_medida) {
+  if (!nombre.value || !descripcion.value) {
     mensaje.value = "Todos los campos son obligatorios";
     exito.value = false;
     return;
@@ -69,12 +62,13 @@ async function guardarIngrediente() {
     const res = await NuevoIngrediente({
       nombre: nombre.value,
       descripcion: descripcion.value,
-      unidad_medida: unidad_medida.value,
+      unidad_medida: unidad_medida.value
     });
 
     mensaje.value = res.message || "Ingrediente creado correctamente";
     exito.value = true;
-    
+
+    // Limpiar formulario
     nombre.value = "";
     descripcion.value = "";
   } catch (err) {
@@ -84,3 +78,4 @@ async function guardarIngrediente() {
   }
 }
 </script>
+

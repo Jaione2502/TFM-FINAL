@@ -1,43 +1,36 @@
-<template>
-  <div class="buscador-container">
-    <h1>Buscador de {{ tipo }}</h1>
-    <div class="buscador-form">
-      <input
-        type="number"
-        v-model="id"
-        placeholder="Introduce un ID"
-        @keyup.enter="cargarDatos(tipo)"
-      />
-      <button @click="cargarDatos(tipo)">Buscar</button>
-    </div>
+<template> 
+  <div class="buscador-container"> 
+    <h1>Buscador de {{ tipo }}</h1> 
+    <div class="buscador-form"> 
+      <input type="number" v-model="id" placeholder="Introduce un ID" @keyup.enter="cargarDatos(tipo)" /> 
+      <button @click="cargarDatos(tipo)">Buscar</button> 
+    </div> 
 
-    <div v-if="resultado" class="resultado-card">
-      <h2>{{ resultado.nombre }}</h2>
-      <p>{{ resultado.descripcion }}</p>
-      <p v-if="resultado.unidad_medida">
-        Unidad de medida: {{ resultado.unidad_medida }}
-      </p>
-      <p v-if="resultado.fecha">Fecha: {{ resultado.fecha }}</p>
-      <p v-if="resultado.usuario_id">Usuario ID: {{ resultado.usuario_id }}</p>
-    </div>
-    <p v-else-if="buscado">No se encontró ningun@ {{ tipo }}</p>
-  </div>
+    <div v-if="resultado" class="resultado-card"> 
+        <h2>{{ resultado.nombre }}</h2> 
+         <p>{{ resultado.descripcion }}</p>
+          <p v-if="resultado.unidad_medida">Unidad de medida: {{ resultado.unidad_medida }}</p>
+        </div> 
+        <p v-else-if="buscado"> No se encontró ningun@ {{ tipo }}</p> 
+    </div> 
 </template>
+
 
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getCategoriasByID } from "../services/api.js";
 import { getIngredientesByID } from "../services/api.js";
-import { getMenuByID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();
 const tipo = ref(route.params.tipo);
 const id = ref("");
 
+
 const resultado = ref(null);
 const buscado = ref(false);
+
 
 async function BuscarCategoria() {
   try {
@@ -102,6 +95,7 @@ async function BuscarMenus() {
   }
 }
 
+
 // En base a donde se ha seleccionado buscaremos un elemento u otro
 async function cargarDatos(tipo) {
   resultado.value = null;
@@ -127,6 +121,7 @@ async function cargarDatos(tipo) {
       console.warn("Tipo no reconocido");
   }
 }
+
 
 watch(
   () => route.params.tipo,

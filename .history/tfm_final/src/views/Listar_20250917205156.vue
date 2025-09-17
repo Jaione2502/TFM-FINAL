@@ -10,7 +10,6 @@
         @click="irAEdicion(item)" >
         <h2 class="card-title">{{ item.nombre }}</h2>
         <p>{{ item.descripcion }}</p>
-        <p>{{ item.unidad_medida }}</p>
       </div>
     </div>
   </div>

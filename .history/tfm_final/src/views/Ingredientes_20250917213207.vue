@@ -74,7 +74,8 @@ async function guardarIngrediente() {
 
     mensaje.value = res.message || "Ingrediente creado correctamente";
     exito.value = true;
-    
+
+    // Limpiar formulario
     nombre.value = "";
     descripcion.value = "";
   } catch (err) {

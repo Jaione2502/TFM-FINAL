@@ -22,7 +22,7 @@
             <ul v-show="showIngredientes" class="submenu">
               <li><RouterLink :to="{ name: 'listar', params: { tipo: 'ingredientes' }}">Listar</RouterLink></li>
               <li><RouterLink to="/ingredientes">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'ingredientes' }}">Buscar</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'categorias' }}">Buscar</RouterLink></li>
 
             </ul>
           </li>
