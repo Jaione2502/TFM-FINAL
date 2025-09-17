@@ -3,13 +3,8 @@
     <h1>Listado de {{ tipo }}</h1>
 
     <div class="card-grid">
-      <div 
-        v-for="item in items" 
-        :key="item.id" 
-        class="card"
-        @click="irAEdicion(item)" >
+      <div v-for="item in items" :key="item.id" class="card">
         <h2 class="card-title">{{ item.nombre }}</h2>
-        <p>{{ item.descripcion }}</p>
       </div>
     </div>
   </div>
@@ -17,15 +12,15 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";  // 👈 importar router
+import { useRoute } from "vue-router";
 import { getCategorias } from "../services/api.js";
 import { getIngredientes } from "../services/api.js";
 import "../assets/styles/Listar.css";
 
 const route = useRoute();
-const router = useRouter();  // 👈 crear instancia
 const items = ref([]);
 const tipo = ref(route.params.tipo);
+
 
 async function ListarCategorias() {
   try {
@@ -35,11 +30,11 @@ async function ListarCategorias() {
   }
 }
 
-async function ListarIngredientes() {
+async function ListarIngredientes()) {
   try {
-    items.value = await getIngredientes();
+    items.value = await getIngredientes());
   } catch (err) {
-    console.error("Error cargando ingredientes:", err);
+    console.error("Error cargando categorías:", err);
   }
 }
 
@@ -58,6 +53,7 @@ async function ListarMenus() {
   items.value = [];
 }
 
+
 async function cargarDatos(tipo) {
   if (tipo === "ingredientes") {
     await ListarIngredientes();
@@ -75,15 +71,8 @@ async function cargarDatos(tipo) {
 }
 
 
-function irAEdicion(item) {
-  router.push({
-    name: "edicion",
-    params: { tipo: tipo.value, id: item.id },
-    query: { nombre: item.nombre, descripcion: item.descripcion }
-  });
-}
-
 cargarDatos(tipo.value);
+
 
 watch(
   () => route.params.tipo,

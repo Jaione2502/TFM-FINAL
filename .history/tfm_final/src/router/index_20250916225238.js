@@ -17,7 +17,7 @@ const routes = [
   props: true
 }
 
-
+];
 
 const router = createRouter({
   history: createWebHistory(),

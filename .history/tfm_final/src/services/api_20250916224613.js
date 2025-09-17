@@ -51,7 +51,6 @@ export async function getCategoriasByID(id) {
   return res.json();
 }
 
-
 export async function getIngredientes() {
   const token = localStorage.getItem('token');
 
@@ -84,55 +83,4 @@ export async function getIngredientesByID(id) {
   }
   
   return res.json();
-}
-
-
-export async function NuevaCategoria({ nombre, descripcion }) {
-  const token = localStorage.getItem('token');
-
-  const res = await fetch('http://localhost:8000/api/categoria', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      nombre: nombre,
-      descripcion: descripcion
-    })
-  });
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || "Error al crear la categoría");
-  }
-
-  return data; // <-- devuelve la respuesta del backend
-}
-
-export async function actualizarItem(tipo, id, datos) {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(datos)
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Error al guardar");
-  return data;
-}
-
-export async function eliminarItem(tipo, id) {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Error al eliminar");
-  return data;
 }
