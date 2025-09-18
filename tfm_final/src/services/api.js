@@ -89,6 +89,79 @@ export async function getUsuarioByID(id) {
   return res.json();
 }
 
+export async function getIngredientes() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/ingredientes', {
+
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+
+    throw new Error('Error al obtener ingredientes');
+  }
+
+  return res.json();
+}
+
+export async function getIngredientesByID(id) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`http://localhost:8000/api/ingredientes/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener el ingrediente con ID ' + id);
+
+  }
+  
+  return res.json();
+}
+
+
+export async function getMenus() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/menus', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener menús');
+  }
+
+  return res.json();
+}
+
+export async function getMenuByID(id) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`http://localhost:8000/api/menus/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener el menú con ID ' + id);
+  }
+
+  return res.json();
+}
+
+
 
 
 export async function NuevaCategoria({ nombre, descripcion }) {
@@ -135,6 +208,93 @@ export async function NuevoUsuario({ name, email, password }) {
 
   return data; 
 }
+
+export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/ingredientes', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      nombre: nombre,
+      descripcion: descripcion,
+      unidad_medida: unidad_medida
+    })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al crear el ingrediente");
+  }
+
+  return data;
+}
+
+export async function NuevoMenu({ usuario_id, nombre, fecha }) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/menus', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      usuario_id: usuario_id ?? null,
+      nombre: nombre,
+      fecha: fecha
+    })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al crear el menú");
+  }
+
+  return data;
+}
+
+
+export async function actualizarItem(tipo, id, datos) {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json", 
+      },
+      body: JSON.stringify(datos),
+    });
+
+ 
+    const texto = await res.text();
+    let data;
+
+    try {
+      data = JSON.parse(texto);
+    } catch {
+      data = { message: texto }; 
+    }
+
+    if (!res.ok) {
+      throw new Error(data.message || "Error en la respuesta del servidor");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error en actualizarItem:", error);
+    throw error;
+  }
+}
+
 
 
 

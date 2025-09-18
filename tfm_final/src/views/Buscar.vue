@@ -1,4 +1,5 @@
 <template>
+
   <div class="buscador-container"> 
     <h1>Buscador de {{ tipo }}</h1> 
 
@@ -32,11 +33,43 @@
   </div>
 </template>
 
+
+  <div class="buscador-container">
+    <h1>Buscador de {{ tipo }}</h1>
+    <div class="buscador-form">
+      <input
+        type="number"
+        v-model="id"
+        placeholder="Introduce un ID"
+        @keyup.enter="cargarDatos(tipo)"
+      />
+      <button @click="cargarDatos(tipo)">Buscar</button>
+    </div>
+
+    <div v-if="resultado" class="resultado-card">
+      <h2>{{ resultado.nombre }}</h2>
+      <p>{{ resultado.descripcion }}</p>
+      <p v-if="resultado.unidad_medida">
+        Unidad de medida: {{ resultado.unidad_medida }}
+      </p>
+      <p v-if="resultado.fecha">Fecha: {{ resultado.fecha }}</p>
+      <p v-if="resultado.usuario_id">Usuario ID: {{ resultado.usuario_id }}</p>
+    </div>
+    <p v-else-if="buscado">No se encontró ningun@ {{ tipo }}</p>
+  </div>
+</template>
+
+
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";  
 import { getCategoriasByID } from "../services/api.js";
+
 import { getUsuarioByID } from "../services/api.js";
+
+import { getIngredientesByID } from "../services/api.js";
+import { getMenuByID } from "../services/api.js";
+
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();
@@ -44,9 +77,10 @@ const tipo = ref(route.params.tipo);
 const id = ref("");
 const router = useRouter();  
 
-const resultado = ref([]);
-const buscado = ref(false);
 
+const resultado = ref([]);
+
+const buscado = ref(false);
 
 async function BuscarCategoria() {
   try {
@@ -85,9 +119,20 @@ async function BuscarPerfiles() {
 }
 
 async function BuscarIngredientes() {
-  console.log("Aquí llamarías a getIngredientes()");
-  resultado.value = { id: id.value, nombre: "Ingrediente de ejemplo" };
-  buscado.value = true;
+  try {
+    const res = await getIngredientesByID(id.value);
+    if (res) {
+      resultado.value = res;
+      buscado.value = true;
+    } else {
+      resultado.value = null;
+      buscado.value = true;
+    }
+  } catch (err) {
+    console.error("Error cargando ingredientes:", err);
+    resultado.value = null;
+    buscado.value = true;
+  }
 }
 
 async function BuscarDietas() {
@@ -103,9 +148,20 @@ async function BuscarRecetas() {
 }
 
 async function BuscarMenus() {
-  console.log("Aquí llamarías a getMenus()");
-  resultado.value = { id: id.value, nombre: "Menú de ejemplo" };
-  buscado.value = true;
+  try {
+    const res = await getMenuByID(id.value);
+    if (res) {
+      resultado.value = res;
+      buscado.value = true;
+    } else {
+      resultado.value = null;
+      buscado.value = true;
+    }
+  } catch (err) {
+    console.error("Error cargando menú:", err);
+    resultado.value = null;
+    buscado.value = true;
+  }
 }
 
 
@@ -144,7 +200,6 @@ function irAEdicion(item) {
     query
   });
 }
-
 
 watch(
   () => route.params.tipo,

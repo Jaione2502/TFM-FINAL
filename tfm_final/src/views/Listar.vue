@@ -6,6 +6,7 @@
         :key="item.id" 
         class="card"
         @click="irAEdicion(item)" >
+
         <template v-if="tipo === 'perfiles'">
             <h2 class="card-title">{{ item.name }}</h2>
             <p>{{ item.email }}</p>
@@ -15,6 +16,12 @@
             <p>{{ item.descripcion }}</p>
         </template>
        
+        <template v-if="tipo === 'ingredientes'">
+          <h2 class="card-title">{{ item.nombre }}</h2>
+          <p>{{ item.descripcion }}</p>
+          <p>{{ item.unidad_medida }}</p>
+         </template>
+
       </div>
     </div>
   </div>
@@ -24,7 +31,12 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";  
 import { getCategorias } from "../services/api.js";
+
 import { getUsuarios } from "../services/api.js";
+
+import { getIngredientes } from "../services/api.js";
+import { getMenus } from "../services/api.js";
+
 import "../assets/styles/Listar.css";
 
 const route = useRoute();
@@ -50,8 +62,11 @@ async function ListarUsuarios() {
 }
 
 async function ListarIngredientes() {
-  console.log("Aquí llamarías a getIngredientes()");
-  items.value = []; 
+  try {
+    items.value = await getIngredientes();
+  } catch (err) {
+    console.error("Error cargando ingredientes:", err);
+  }
 }
 
 async function ListarDietas() {
@@ -65,8 +80,11 @@ async function ListarRecetas() {
 }
 
 async function ListarMenus() {
-  console.log("Aquí llamarías a getMenus()");
-  items.value = [];
+  try {
+    items.value = await getMenus();
+  } catch (err) {
+    console.error("Error cargando menús:", err);
+  }
 }
 
 async function cargarDatos(tipo) {
