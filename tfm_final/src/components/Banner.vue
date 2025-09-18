@@ -13,7 +13,15 @@
       <nav>
         <ul>
           <li><RouterLink to="/home">Inicio</RouterLink></li>
-          <li><a href="#">Mi perfil</a></li>
+          <li><button class="menu-btn" @click="togglePerfiles">
+              Perfiles
+              <span class="arrow">{{ showPerfiles ? "▲" : "▼" }}</span>
+            </button>
+            <ul v-show="showPerfiles" class="submenu">
+              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'perfiles' }}">Listar</RouterLink></li>
+              <li><RouterLink to="/perfiles">Nuevo</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'perfiles' }}">Buscar</RouterLink></li>
+            </ul></li>
           <li>
             <button class="menu-btn" @click="toggleIngredientes">
               Ingredientes
@@ -94,6 +102,7 @@ const showIngredientes = ref(false);
 const showDietas = ref(false);
 const showMenus = ref(false);
 const showRecetas = ref(false);
+const showPerfiles = ref(false);
 
 const toggleCategorias = () => {
   showCategorias.value = !showCategorias.value;
@@ -114,6 +123,11 @@ const toggleMenus = () => {
 const toggleRecetas = () => {
   showRecetas.value = !showRecetas.value;
 };
+
+const togglePerfiles = () => {
+  showPerfiles.value = !showPerfiles.value;
+};
+
 
 
 

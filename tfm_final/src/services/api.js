@@ -34,6 +34,26 @@ export async function getCategorias() {
   return res.json();
 }
 
+export async function getUsuarios() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/usuario', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener los perfiles');
+  }
+
+  return res.json();
+}
+
+
+
+
 export async function getCategoriasByID(id) {
   const token = localStorage.getItem('token');
 
@@ -52,10 +72,10 @@ export async function getCategoriasByID(id) {
 }
 
 
-export async function getIngredientes() {
+export async function getUsuarioByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/ingredientes', {
+  const res = await fetch(`http://localhost:8000/api/usuario/${id}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -63,6 +83,25 @@ export async function getIngredientes() {
   });
 
   if (!res.ok) {
+    throw new Error('Error al obtener el usuario con ID ' + id);
+  }
+  
+  return res.json();
+}
+
+export async function getIngredientes() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/ingredientes', {
+
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+
     throw new Error('Error al obtener ingredientes');
   }
 
@@ -81,10 +120,12 @@ export async function getIngredientesByID(id) {
 
   if (!res.ok) {
     throw new Error('Error al obtener el ingrediente con ID ' + id);
+
   }
   
   return res.json();
 }
+
 
 export async function getMenus() {
   const token = localStorage.getItem('token');
@@ -122,6 +163,7 @@ export async function getMenuByID(id) {
 
 
 
+
 export async function NuevaCategoria({ nombre, descripcion }) {
   const token = localStorage.getItem('token');
 
@@ -143,9 +185,29 @@ export async function NuevaCategoria({ nombre, descripcion }) {
     throw new Error(data.message || "Error al crear la categoría");
   }
 
-  return data;
+  return data; 
 }
 
+export async function NuevoUsuario({ name, email, password }) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/usuario', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name, email, password })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al crear el usuario");
+  }
+
+  return data; 
+}
 
 export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
   const token = localStorage.getItem('token');
@@ -198,21 +260,78 @@ export async function NuevoMenu({ usuario_id, nombre, fecha }) {
 }
 
 
-// Actualizar
+export async function actualizarItem(tipo, id, datos) {
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json", 
+      },
+      body: JSON.stringify(datos),
+    });
+
+ 
+    const texto = await res.text();
+    let data;
+
+    try {
+      data = JSON.parse(texto);
+    } catch {
+      data = { message: texto }; 
+    }
+
+    if (!res.ok) {
+      throw new Error(data.message || "Error en la respuesta del servidor");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error en actualizarItem:", error);
+    throw error;
+  }
+}
+
+
+
+
 
 export async function actualizarItem(tipo, id, datos) {
   const token = localStorage.getItem("token");
-  const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(datos)
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Error al guardar");
-  return data;
+
+  try {
+    const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json", 
+      },
+      body: JSON.stringify(datos),
+    });
+
+ 
+    const texto = await res.text();
+    let data;
+
+    try {
+      data = JSON.parse(texto);
+    } catch {
+      data = { message: texto }; 
+    }
+
+    if (!res.ok) {
+      throw new Error(data.message || "Error en la respuesta del servidor");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error en actualizarItem:", error);
+    throw error;
+  }
 }
 
 export async function eliminarItem(tipo, id) {
