@@ -3,15 +3,29 @@
     <h1>Editar {{ tipo }}</h1>
 
     <form @submit.prevent="guardar">
-      <div>
-        <label>Nombre:</label>
-        <input v-model="nombre" type="text" />
-      </div>
+       <template v-if="tipo === 'categorias'">
+          <div>
+            <label>Nombre:</label>
+            <input v-model="nombre" type="text" />
+          </div>
 
-      <div>
-        <label>Descripción:</label>
-        <textarea v-model="descripcion"></textarea>
-      </div>
+          <div>
+            <label>Descripción:</label>
+            <textarea v-model="descripcion"></textarea>
+          </div>
+       </template>
+        <template v-if="tipo === 'perfiles'">
+          <div>
+            <label>Nombre:</label>
+            <input v-model="nombre" type="text" />
+          </div>
+
+          <div>
+            <label>Email:</label>
+            <textarea v-model="email"></textarea>
+          </div>
+       </template>
+
 
       <div class="botones">
         <button type="submit">Guardar</button>
@@ -27,6 +41,7 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { actualizarItem, eliminarItem } from "../services/api.js";
+import "../assets/styles/Edicion.css";
 
 const route = useRoute();
 const router = useRouter();
@@ -36,29 +51,43 @@ const id = route.params.id;
 
 
 const nombre = ref(route.query.nombre || "");
-const descripcion = ref(route.query.descripcion || "");
+const descripcion =  ref(route.query.descripcion || "");
+const email = ref(route.query.email || "");
 
 const mensaje = ref("");
 const exito = ref(false);
 
-// Actualizar elemento
+
+
 async function guardar() {
   try {
+    let data = {};
     if (tipo === "categorias") 
-        {
-            const data = await actualizarItem("categoria", id, {
-            nombre: nombre.value,
-            descripcion: descripcion.value
+      {
+        const data = await actualizarItem("categoria", id, { 
+          nombre: nombre.value, 
+          descripcion: descripcion.value 
         });
+      }
+    else if (tipo === "perfiles")  {
+       const data = await actualizarItem("usuario", id, { 
+          name: nombre.value, 
+          email: email.value 
+        });
+
     }
-    
     mensaje.value = data.message || "Cambios guardados correctamente";
+    alert("Cambios guardados correctamente");
+    router.push({ name: "listar", params: { tipo } });
     exito.value = true;
   } catch (err) {
     mensaje.value = err.message || "Error al guardar";
     exito.value = false;
   }
 }
+
+
+
 
 // Eliminar elemento 
 async function eliminar() {
@@ -67,6 +96,9 @@ async function eliminar() {
   try {
      if (tipo === "categorias") {
         await eliminarItem("categoria", id);
+     }
+     else if (tipo ==="perfiles"){
+      await eliminarItem("usuario", id);
      }
     
     alert("Eliminado correctamente");
@@ -78,25 +110,3 @@ async function eliminar() {
 }
 </script>
 
-<style scoped>
-.edicion-container {
-  max-width: 500px;
-  margin: auto;
-}
-
-form div {
-  margin-bottom: 1rem;
-}
-
-.botones button {
-  margin-right: 10px;
-}
-
-.exito {
-  color: green;
-}
-
-.error {
-  color: red;
-}
-</style>

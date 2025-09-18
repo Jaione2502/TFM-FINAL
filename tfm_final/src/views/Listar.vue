@@ -1,15 +1,20 @@
 <template>
   <div class="listar-container">
     <h1>Listado de {{ tipo }}</h1>
-
     <div class="card-grid">
-      <div 
-        v-for="item in items" 
+      <div v-for="item in items" 
         :key="item.id" 
         class="card"
         @click="irAEdicion(item)" >
-        <h2 class="card-title">{{ item.nombre }}</h2>
-        <p>{{ item.descripcion }}</p>
+        <template v-if="tipo === 'perfiles'">
+            <h2 class="card-title">{{ item.name }}</h2>
+            <p>{{ item.email }}</p>
+        </template>
+        <template v-if="tipo === 'categorias'">
+            <h2 class="card-title">{{ item.nombre }}</h2>
+            <p>{{ item.descripcion }}</p>
+        </template>
+       
       </div>
     </div>
   </div>
@@ -17,12 +22,13 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";  // 👈 importar router
+import { useRoute, useRouter } from "vue-router";  
 import { getCategorias } from "../services/api.js";
+import { getUsuarios } from "../services/api.js";
 import "../assets/styles/Listar.css";
 
 const route = useRoute();
-const router = useRouter();  // 👈 crear instancia
+const router = useRouter();  
 const items = ref([]);
 const tipo = ref(route.params.tipo);
 
@@ -32,6 +38,15 @@ async function ListarCategorias() {
   } catch (err) {
     console.error("Error cargando categorías:", err);
   }
+}
+
+async function ListarUsuarios() {
+  try{
+    items.value = await getUsuarios();
+  }catch (err){
+    console.error("Error cargando usuarios:", err);
+  }
+
 }
 
 async function ListarIngredientes() {
@@ -65,6 +80,8 @@ async function cargarDatos(tipo) {
     await ListarRecetas();
   } else if (tipo === "menus") {
     await ListarMenus();
+  } else if (tipo=="perfiles"){
+    await ListarUsuarios();
   } else {
     items.value = [];
   }
@@ -72,10 +89,19 @@ async function cargarDatos(tipo) {
 
 
 function irAEdicion(item) {
+  let query = {};
+
+  // Dependiendo del tipo, pasamos distintos campos
+  if (tipo.value === "categorias") {
+    query = { nombre: item.nombre, descripcion: item.descripcion };
+  } else if (tipo.value === "perfiles") {
+    query = { nombre: item.name, email: item.email };
+  }
+
   router.push({
     name: "edicion",
     params: { tipo: tipo.value, id: item.id },
-    query: { nombre: item.nombre, descripcion: item.descripcion }
+    query
   });
 }
 

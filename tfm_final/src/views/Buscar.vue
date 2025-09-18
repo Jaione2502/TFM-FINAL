@@ -1,32 +1,50 @@
-<template> 
+<template>
   <div class="buscador-container"> 
     <h1>Buscador de {{ tipo }}</h1> 
+
     <div class="buscador-form"> 
-      <input type="number" v-model="id" placeholder="Introduce un ID" @keyup.enter="cargarDatos(tipo)" /> 
+      <input type="number" v-model="id" placeholder="Introduce un ID"  @keyup.enter="cargarDatos(tipo)"  /> 
       <button @click="cargarDatos(tipo)">Buscar</button> 
     </div> 
 
-    <div v-if="resultado" class="resultado-card"> 
-        <h2>{{ resultado.nombre }}</h2> 
-         <p>{{ resultado.descripcion }}</p>
-        </div> 
-        <p v-else-if="buscado"> No se encontró ningun@ {{ tipo }}</p> 
-    </div> 
-</template>
 
+    <div v-if="resultado">
+
+      <!-- Categorías -->
+      <div v-if="tipo === 'categorias'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
+        <h2>{{ resultado.nombre }}</h2>
+        <p>{{ resultado.descripcion }}</p>
+      </div>
+
+      <!-- Perfiles -->
+      <div v-if="tipo === 'perfiles'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
+        <h2>{{ resultado.name }}</h2>
+        <p>{{ resultado.email }}</p>
+      </div>
+      <!-- Ingredientes -->
+      <!-- Recetas -->
+      <!-- Dietas -->
+      <!-- Menús -->
+    </div>
+
+ 
+    <p v-else-if="buscado">No se encontró ningun@ {{ tipo }}</p>
+  </div>
+</template>
 
 <script setup>
 import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";  
 import { getCategoriasByID } from "../services/api.js";
+import { getUsuarioByID } from "../services/api.js";
 import "../assets/styles/Buscar.css";
 
 const route = useRoute();
 const tipo = ref(route.params.tipo);
 const id = ref("");
+const router = useRouter();  
 
-
-const resultado = ref(null);
+const resultado = ref([]);
 const buscado = ref(false);
 
 
@@ -41,10 +59,29 @@ async function BuscarCategoria() {
       buscado.value = true;
     }
   } catch (err) {
-    console.error("Error cargando categorías:", err);
+    console.error("Error buscando categorías:", err);
     resultado.value = null;
     buscado.value = true;
   }
+}
+
+
+async function BuscarPerfiles() {
+    try {
+    const res = await getUsuarioByID(id.value);
+    if (res) {
+      resultado.value = res;
+      buscado.value = true;
+    } else {
+      resultado.value = null;
+      buscado.value = true;
+    }
+  } catch (err) {
+    console.error("Error buscando perfiles:", err);
+    resultado.value = null;
+    buscado.value = true;
+  }
+  
 }
 
 async function BuscarIngredientes() {
@@ -71,30 +108,41 @@ async function BuscarMenus() {
   buscado.value = true;
 }
 
-// En base a donde se ha seleccionado buscaremos un elemento u otro
-async function cargarDatos(tipo) {
-  resultado.value = null;
-  buscado.value = false;
 
-  switch (tipo) {
-    case "categorias":
-      await BuscarCategoria();
-      break;
-    case "ingredientes":
-      await BuscarIngredientes();
-      break;
-    case "dietas":
-      await BuscarDietas();
-      break;
-    case "recetas":
-      await BuscarRecetas();
-      break;
-    case "menus":
-      await BuscarMenus();
-      break;
-    default:
-      console.warn("Tipo no reconocido");
+async function cargarDatos(tipo) {
+  if (tipo === "ingredientes") {
+    await BuscarIngredientes();
+  } else if (tipo === "categorias") {
+    await BuscarCategoria();
+  } else if (tipo === "dietas") {
+    await BuscarDietas();
+  } else if (tipo === "recetas") {
+    await BuscarRecetas();
+  } else if (tipo === "menus") {
+    await BuscarMenus();
+  } else if (tipo=="perfiles"){
+    await BuscarPerfiles();
+  } else {
+    items.value = [];
   }
+}
+
+
+function irAEdicion(item) {
+  let query = {};
+  console.log = item.id;
+  // Dependiendo del tipo, pasamos distintos campos
+  if (tipo.value === "categorias") {
+    query = { nombre: item.nombre, descripcion: item.descripcion };
+  } else if (tipo.value === "perfiles") {
+    query = { nombre: item.name, email: item.email };
+  }
+
+  router.push({
+    name: "edicion",
+    params: { tipo: tipo.value, id: id.value },
+    query
+  });
 }
 
 

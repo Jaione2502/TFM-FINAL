@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Politicas from "../views/Politicas.vue";
 import Categorias from "../views/Categorias.vue";
+import Perfiles  from "../views/Perfil.vue";  
 import Login from "../views/Login.vue";
 import { auth } from "../auth.js"
 
@@ -10,6 +11,7 @@ const routes = [
   { path: "/politicas", component: Politicas, meta: { requiresAuth: true } },
   { path: "/login", name: "Login", component: Login },
   { path: "/categorias", component: Categorias, meta: { requiresAuth: true } },
+   { path: "/perfiles", component: Perfiles, meta: { requiresAuth: true } },
   { path: "/:tipo/listar", name: "listar", component: () => import("../views/Listar.vue") },
   { path: "/:tipo/buscar", name: "buscar", component: () => import("../views/Buscar.vue"), props: true },
   { path: "/:tipo/editar/:id", name: "edicion", component: () => import("../views/Edicion.vue"), props: true, meta: { requiresAuth: true } }
