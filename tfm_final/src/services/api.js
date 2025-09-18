@@ -297,43 +297,6 @@ export async function actualizarItem(tipo, id, datos) {
 
 
 
-
-
-export async function actualizarItem(tipo, id, datos) {
-  const token = localStorage.getItem("token");
-
-  try {
-    const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json", 
-      },
-      body: JSON.stringify(datos),
-    });
-
- 
-    const texto = await res.text();
-    let data;
-
-    try {
-      data = JSON.parse(texto);
-    } catch {
-      data = { message: texto }; 
-    }
-
-    if (!res.ok) {
-      throw new Error(data.message || "Error en la respuesta del servidor");
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Error en actualizarItem:", error);
-    throw error;
-  }
-}
-
 export async function eliminarItem(tipo, id) {
   const token = localStorage.getItem("token");
   const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
