@@ -27,7 +27,12 @@
           <h2 class="card-title">{{ item.nombre }}</h2>
           <p>{{ item.descripcion }}</p>
           <p>{{ item.unidad_medida }}</p>
-         </template>
+        </template>
+        <template v-if="tipo === 'menus'">
+          <h2 class="card-title">{{ item.nombre }}</h2>
+          <p>{{ item.usuario_id }}</p>
+          <p>Fecha: {{ item.fecha }} </p>
+        </template>
 
       </div>
     </div>

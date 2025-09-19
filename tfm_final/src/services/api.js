@@ -288,7 +288,7 @@ export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
   return data;
 }
 
-export async function NuevoMenu({ usuario_id, nombre, fecha }) {
+export async function NuevoMenu({ nombre, fecha }) {
   const token = localStorage.getItem('token');
 
   const res = await fetch('http://localhost:8000/api/menus', {
@@ -298,7 +298,6 @@ export async function NuevoMenu({ usuario_id, nombre, fecha }) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      usuario_id: usuario_id ?? null,
       nombre: nombre,
       fecha: fecha
     })

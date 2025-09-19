@@ -10,6 +10,7 @@ section {
     gap: 1rem;
     flex-wrap: wrap;
     margin-top: 3;
+    margin: 10 0 0 0;
 }
 
 .beneficio,

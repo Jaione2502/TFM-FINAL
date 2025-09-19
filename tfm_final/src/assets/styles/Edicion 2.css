@@ -1,0 +1,20 @@
+.edicion-container {
+  max-width: 500px;
+  margin: auto;
+}
+
+form div {
+  margin-bottom: 1rem;
+}
+
+.botones button {
+  margin-right: 10px;
+}
+
+.exito {
+  color: green;
+}
+
+.error {
+  color: red;
+}

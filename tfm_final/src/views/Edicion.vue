@@ -14,6 +14,7 @@
             <label>Descripción:</label>
             <textarea v-model="descripcion"></textarea>
           </div>
+
        </template>
        <!-- Perfiles -->
       <template v-if="tipo === 'perfiles'">
@@ -27,6 +28,7 @@
             <textarea v-model="email"></textarea>
           </div>
        </template>
+
        <!-- Comentarios -->
         <template v-if="tipo === 'comentarios'">
           <div>
@@ -47,7 +49,33 @@
         <!-- Ingredientes -->
         <!-- Recetas -->
         <!-- Menus -->
-     
+
+       <template v-if="tipo === 'ingredientes'">
+          <div>
+            <label>Nombre:</label>
+            <input v-model="nombre" type="text" />
+          </div>
+
+          <div>
+            <label>Descripción:</label>
+            <textarea v-model="descripcion"></textarea>
+          </div>
+          <div>
+            <label>Unidad de Medida:</label>
+            <textarea v-model="unidad_medida"></textarea>
+          </div>
+       </template>
+       <template v-if="tipo === 'menus'">
+          <div>
+            <label>Nombre:</label>
+            <input v-model="nombre" type="text" />
+          </div>
+
+          <div>
+            <label>Fecha:</label>
+            <input type="date" id="fecha" v-model="fecha" name="fecha" required>
+          </div>
+       </template>
 
 
       <div class="botones">
@@ -69,16 +97,21 @@ import "../assets/styles/Edicion.css";
 const route = useRoute();
 const router = useRouter();
 
-const tipo = route.params.tipo;
-const id = route.params.id;
+const tipo = ref(route.params.tipo);
+const id = ref(Number(route.params.id));
 
 
 const nombre = ref(route.query.nombre || "");
 const descripcion =  ref(route.query.descripcion || "");
 const email = ref(route.query.email || "");
+
 const usuario = ref(route.query.usuario || "");
 const receta = ref(route.query.receta || "");
 const contenido = ref(route.query.contenido || "");
+
+const unidad_medida = ref(route.query.unidad_medida || "");
+const fecha = ref(route.query.fecha || "");
+
 
 const mensaje = ref("");
 const exito = ref(false);
@@ -108,6 +141,22 @@ async function guardar() {
           contenido: contenido.value
         });   
     }
+    else if (tipo === "ingredientes")  {
+       const data = await actualizarItem("ingrediente", id, { 
+          nombre: nombre.value, 
+          descripcion: descripcion.value,
+          unidad_medida: unidad_medida.value 
+        });
+
+    }
+    else if (tipo === "menus")  {
+       const data = await actualizarItem("menu", id, { 
+          nombre: nombre.value, 
+          fecha: fecha.value 
+        });
+
+    }
+
     mensaje.value = data.message || "Cambios guardados correctamente";
     alert("Cambios guardados correctamente");
     router.push({ name: "listar", params: { tipo } });
@@ -119,8 +168,6 @@ async function guardar() {
 }
 
 
-
-
 // Eliminar elemento 
 async function eliminar() {
   if (!confirm("¿Seguro que quieres eliminar el elemento?")) return;
@@ -128,10 +175,20 @@ async function eliminar() {
   try {
      if (tipo === "categorias") {
         await eliminarItem("categoria", id);
+
      }else if (tipo ==="perfiles"){
         await eliminarItem("usuario", id);
     }else if (tipo ==="comentarios"){
         await eliminarItem("comentario", id);
+     }
+     else if (tipo ==="perfiles"){
+      await eliminarItem("usuario", id);
+     } 
+     else if (tipo === "ingredientes") {
+      await eliminarItem("ingrediente", id);
+     }
+     else if (tipo === "menus") {
+      await eliminarItem("menu", id);
      }
     
     alert("Eliminado correctamente");

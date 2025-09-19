@@ -31,9 +31,19 @@
       </div>
 
       <!-- Ingredientes -->
+      <div v-if="tipo === 'ingredientes'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
+        <h2>{{ resultado.nombre }}</h2>
+        <p>{{ resultado.descripcion }}</p>
+        <p>{{ resultado.unidad_medida }}</p>
+      </div>
       <!-- Recetas -->
       <!-- Dietas -->
       <!-- Menús -->
+      <div v-if="tipo === 'menus'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
+        <h2>{{ resultado.nombre }}</h2>
+        <p>{{ resultado.usuario_id }}</p>
+        <p>Fecha: {{ resultado.fecha }} </p>
+      </div>
     </div>
 
  
@@ -117,18 +127,6 @@ async function BuscarIngredientes() {
   }
 }
 
-async function BuscarDietas() {
-  console.log("Aquí llamarías a getDietas()");
-  resultado.value = { id: id.value, nombre: "Dieta de ejemplo" };
-  buscado.value = true;
-}
-
-async function BuscarRecetas() {
-  console.log("Aquí llamarías a getRecetas()");
-  resultado.value = { id: id.value, nombre: "Receta de ejemplo" };
-  buscado.value = true;
-}
-
 async function BuscarMenus() {
   try {
     const res = await getMenuByID(id.value);
@@ -147,6 +145,7 @@ async function BuscarMenus() {
 }
 
 
+
 async function BuscarComentarios(){
    try {
     const res = await getComentariosByID(id.value);
@@ -162,6 +161,17 @@ async function BuscarComentarios(){
     resultado.value = null;
     buscado.value = true;
   }
+
+async function BuscarDietas() {
+  console.log("Aquí llamarías a getDietas()");
+  resultado.value = { id: id.value, nombre: "Dieta de ejemplo" };
+  buscado.value = true;
+}
+
+async function BuscarRecetas() {
+  console.log("Aquí llamarías a getRecetas()");
+  resultado.value = { id: id.value, nombre: "Receta de ejemplo" };
+  buscado.value = true;
 }
 
 
