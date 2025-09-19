@@ -52,7 +52,41 @@ export async function getUsuarios() {
 }
 
 
+export async function getComentarios() {
+  const token = localStorage.getItem('token');
 
+  const res = await fetch('http://localhost:8000/api/comentario', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener los comentarios');
+  }
+
+  return res.json();
+  
+}
+
+export async function getRecetas() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/recetas', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener las recetas');
+  }
+
+  return res.json();
+  
+}
 
 export async function getCategoriasByID(id) {
   const token = localStorage.getItem('token');
@@ -125,6 +159,26 @@ export async function getIngredientesByID(id) {
   
   return res.json();
 }
+
+export async function getComentariosByID(id) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`http://localhost:8000/api/comentario/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener el comentario con ID ' + id);
+  }
+  
+  return res.json();
+}
+
+
+
 
 
 export async function getMenus() {
@@ -258,6 +312,32 @@ export async function NuevoMenu({ usuario_id, nombre, fecha }) {
 
   return data;
 }
+
+
+export async function NuevoComentario({usuario_id,receta_id,contenido}) {
+
+
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/comentario', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ usuario_id,receta_id,contenido})
+
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al crear el comentario");
+  }
+
+  return data;
+}
+
 
 
 export async function actualizarItem(tipo, id, datos) {

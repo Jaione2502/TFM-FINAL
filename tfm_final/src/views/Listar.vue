@@ -6,16 +6,23 @@
         :key="item.id" 
         class="card"
         @click="irAEdicion(item)" >
-
+        <!-- Perfiles -->
         <template v-if="tipo === 'perfiles'">
             <h2 class="card-title">{{ item.name }}</h2>
             <p>{{ item.email }}</p>
         </template>
+        <!-- Categorias -->
         <template v-if="tipo === 'categorias'">
             <h2 class="card-title">{{ item.nombre }}</h2>
             <p>{{ item.descripcion }}</p>
         </template>
-       
+        <!-- Comentarios -->
+         <template v-if="tipo === 'comentarios'">
+            <h2 class="card-title">{{ item.receta }}</h2>
+            <p>{{ item.usuario }}</p>
+            <p>{{ item.contenido }}</p>
+        </template>
+       <!-- Ingredientes -->
         <template v-if="tipo === 'ingredientes'">
           <h2 class="card-title">{{ item.nombre }}</h2>
           <p>{{ item.descripcion }}</p>
@@ -31,9 +38,8 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";  
 import { getCategorias } from "../services/api.js";
-
+import { getComentarios } from "../services/api.js";
 import { getUsuarios } from "../services/api.js";
-
 import { getIngredientes } from "../services/api.js";
 import { getMenus } from "../services/api.js";
 
@@ -51,6 +57,16 @@ async function ListarCategorias() {
     console.error("Error cargando categorías:", err);
   }
 }
+
+async function ListarComentarios() {
+  try {
+    items.value = await getComentarios();
+  } catch (err) {
+    console.error("Error cargando comentarios:", err);
+  }
+}
+
+
 
 async function ListarUsuarios() {
   try{
@@ -100,6 +116,8 @@ async function cargarDatos(tipo) {
     await ListarMenus();
   } else if (tipo=="perfiles"){
     await ListarUsuarios();
+  } else if (tipo=="comentarios"){
+    await ListarComentarios();
   } else {
     items.value = [];
   }
@@ -114,6 +132,8 @@ function irAEdicion(item) {
     query = { nombre: item.nombre, descripcion: item.descripcion };
   } else if (tipo.value === "perfiles") {
     query = { nombre: item.name, email: item.email };
+  } else if (tipo.value ==="comentarios") {
+    query = {contenido: item.contenido , usuario: item.usuario , receta: item.receta};
   }
 
   router.push({

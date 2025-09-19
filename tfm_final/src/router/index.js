@@ -6,6 +6,7 @@ import Perfiles  from "../views/Perfil.vue";
 import Ingredientes from "../views/Ingredientes.vue"
 import Menús from "../views/Menus.vue";
 import Login from "../views/Login.vue";
+import Comentarios from "../views/Comentarios.vue";
 import { auth } from "../auth.js"
 
 const routes = [
@@ -13,9 +14,10 @@ const routes = [
   { path: "/politicas", component: Politicas, meta: { requiresAuth: true } },
   { path: "/login", name: "Login", component: Login },
   { path: "/categorias", component: Categorias, meta: { requiresAuth: true } },
-   { path: "/ingredientes", component: Ingredientes, meta: { requiresAuth: true }},
+  { path: "/ingredientes", component: Ingredientes, meta: { requiresAuth: true }},
   { path: "/menus", component: Menús, meta: { requiresAuth: true }},
   { path: "/perfiles", component: Perfiles, meta: { requiresAuth: true } },
+  { path: "/comentarios", component: Comentarios, meta: { requiresAuth: true } },
   { path: "/:tipo/listar", name: "listar", component: () => import("../views/Listar.vue") },
   { path: "/:tipo/buscar", name: "buscar", component: () => import("../views/Buscar.vue"), props: true },
   { path: "/:tipo/editar/:id", name: "edicion", component: () => import("../views/Edicion.vue"), props: true, meta: { requiresAuth: true } }

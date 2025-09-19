@@ -3,6 +3,7 @@
     <h1>Editar {{ tipo }}</h1>
 
     <form @submit.prevent="guardar">
+      <!-- Categorias -->
        <template v-if="tipo === 'categorias'">
           <div>
             <label>Nombre:</label>
@@ -14,7 +15,8 @@
             <textarea v-model="descripcion"></textarea>
           </div>
        </template>
-        <template v-if="tipo === 'perfiles'">
+       <!-- Perfiles -->
+      <template v-if="tipo === 'perfiles'">
           <div>
             <label>Nombre:</label>
             <input v-model="nombre" type="text" />
@@ -25,6 +27,27 @@
             <textarea v-model="email"></textarea>
           </div>
        </template>
+       <!-- Comentarios -->
+        <template v-if="tipo === 'comentarios'">
+          <div>
+            <label>Titulo receta:</label>
+            <input v-model="receta" type="text" disabled  />
+          </div>
+
+          <div>
+            <label>Usuario:</label>
+            <textarea v-model="usuario"   type="text" disabled ></textarea>
+          </div>
+
+           <div>
+            <label>Comentario:</label>
+            <textarea v-model="contenido"  type="text"  ></textarea>
+          </div>
+       </template>
+        <!-- Ingredientes -->
+        <!-- Recetas -->
+        <!-- Menus -->
+     
 
 
       <div class="botones">
@@ -53,6 +76,9 @@ const id = route.params.id;
 const nombre = ref(route.query.nombre || "");
 const descripcion =  ref(route.query.descripcion || "");
 const email = ref(route.query.email || "");
+const usuario = ref(route.query.usuario || "");
+const receta = ref(route.query.receta || "");
+const contenido = ref(route.query.contenido || "");
 
 const mensaje = ref("");
 const exito = ref(false);
@@ -74,7 +100,13 @@ async function guardar() {
           name: nombre.value, 
           email: email.value 
         });
-
+      }
+    else if (tipo === "comentarios")  {
+       const data = await actualizarItem("comentario", id, { 
+          usuario: usuario.value, 
+          receta: receta.value ,
+          contenido: contenido.value
+        });   
     }
     mensaje.value = data.message || "Cambios guardados correctamente";
     alert("Cambios guardados correctamente");
@@ -96,9 +128,10 @@ async function eliminar() {
   try {
      if (tipo === "categorias") {
         await eliminarItem("categoria", id);
-     }
-     else if (tipo ==="perfiles"){
-      await eliminarItem("usuario", id);
+     }else if (tipo ==="perfiles"){
+        await eliminarItem("usuario", id);
+    }else if (tipo ==="comentarios"){
+        await eliminarItem("comentario", id);
      }
     
     alert("Eliminado correctamente");

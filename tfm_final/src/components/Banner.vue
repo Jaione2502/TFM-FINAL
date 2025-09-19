@@ -78,6 +78,17 @@
               <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'menus' }}">Buscar</RouterLink></li>
             </ul>
           </li>
+          <li>
+            <button class="menu-btn" @click="toggleComentarios">
+              Comentarios
+              <span class="arrow">{{ showComentarios ? "▲" : "▼" }}</span>
+            </button>
+            <ul v-show="showComentarios" class="submenu">
+              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'comentarios' }}">Listar</RouterLink></li>
+              <li><RouterLink to="/comentarios">Nuevo</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'comentarios' }}">Buscar</RouterLink></li>
+            </ul>
+          </li>
         </ul>
       </nav>
     </aside>
@@ -103,6 +114,7 @@ const showDietas = ref(false);
 const showMenus = ref(false);
 const showRecetas = ref(false);
 const showPerfiles = ref(false);
+const showComentarios = ref(false);
 
 const toggleCategorias = () => {
   showCategorias.value = !showCategorias.value;
@@ -127,6 +139,11 @@ const toggleRecetas = () => {
 const togglePerfiles = () => {
   showPerfiles.value = !showPerfiles.value;
 };
+
+const toggleComentarios = () => {
+  showComentarios.value = !showComentarios.value;
+};
+
 
 
 
