@@ -22,6 +22,14 @@
         <h2>{{ resultado.name }}</h2>
         <p>{{ resultado.email }}</p>
       </div>
+      
+         <!-- Comentarios -->
+      <div v-if="tipo === 'comentarios'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
+        <h2>{{ resultado.receta }}</h2>
+        <p>{{ resultado.usuario }}</p>
+        <p>{{ resultado.contenido }}</p>
+      </div>
+
       <!-- Ingredientes -->
       <div v-if="tipo === 'ingredientes'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
         <h2>{{ resultado.nombre }}</h2>
@@ -52,6 +60,7 @@ import { getCategoriasByID } from "../services/api.js";
 import { getUsuarioByID } from "../services/api.js";
 import { getIngredientesByID } from "../services/api.js";
 import { getMenuByID } from "../services/api.js";
+import { getComentariosByID } from "../services/api.js";
 
 import "../assets/styles/Buscar.css";
 
@@ -136,6 +145,23 @@ async function BuscarMenus() {
 }
 
 
+
+async function BuscarComentarios(){
+   try {
+    const res = await getComentariosByID(id.value);
+    if (res) {
+      resultado.value = res;
+      buscado.value = true;
+    } else {
+      resultado.value = null;
+      buscado.value = true;
+    }
+  } catch (err) {
+    console.error("Error cargando menú:", err);
+    resultado.value = null;
+    buscado.value = true;
+  }
+
 async function BuscarDietas() {
   console.log("Aquí llamarías a getDietas()");
   resultado.value = { id: id.value, nombre: "Dieta de ejemplo" };
@@ -162,6 +188,8 @@ async function cargarDatos(tipo) {
     await BuscarMenus();
   } else if (tipo=="perfiles"){
     await BuscarPerfiles();
+  } else if (tipo=="comentarios"){
+    await BuscarComentarios();
   } else {
     items.value = [];
   }
@@ -176,6 +204,8 @@ function irAEdicion(item) {
     query = { nombre: item.nombre, descripcion: item.descripcion };
   } else if (tipo.value === "perfiles") {
     query = { nombre: item.name, email: item.email };
+  } else if (tipo.value ==="comentarios") {
+    query = {contenido: item.contenido , usuario: item.usuario , receta: item.receta};
   }
 
   router.push({

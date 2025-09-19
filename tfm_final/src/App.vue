@@ -57,6 +57,7 @@ const logout = () => {
 </script>
 
 <style>
+
 .logout-container {
   position: fixed;
   top: 0;
@@ -64,15 +65,6 @@ const logout = () => {
   z-index: 300;
   padding: 0.5rem 1rem;
 
-}
-
-
-
-/* Footer */
-footer {
-  padding: 0;
-  text-align: center;
-  background: #f4f4f4;
 }
 
 .logout-btn {
@@ -83,25 +75,28 @@ footer {
   border: none;
   cursor: pointer;
 }
+
 .logout-btn:hover {
   background: #cc0000;
 }
 
 .banner-top {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;  
   width: 100%;
   z-index: 200;
+  flex-shrink: 0;
 }
 
+
 .content {
-  padding-top: 80px; /* ajustar según altura del banner */
+  justify-content: center;
+  padding-top: 80px; 
 }
 
 footer {
   text-align: center;
   background: #f4f4f4;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
+  flex-shrink: 0;
 }
 </style>
