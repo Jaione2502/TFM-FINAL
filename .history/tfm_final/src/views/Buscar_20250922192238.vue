@@ -161,7 +161,6 @@ async function BuscarComentarios(){
     resultado.value = null;
     buscado.value = true;
   }
-}
 
 async function BuscarDietas() {
   console.log("Aquí llamarías a getDietas()");
