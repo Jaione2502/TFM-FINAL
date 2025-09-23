@@ -29,7 +29,7 @@
           <p>{{ item.unidad_medida }}</p>
         </template>
         <template v-if="tipo === 'menus'">
-          <p>{{ item.usuario_id }}</p>
+          <p>{{ item.usuario }}</p>
           <h2 class="card-title">{{ item.nombre }}</h2>
           <p>Fecha: {{ item.fecha }} </p>
         </template>
@@ -140,7 +140,7 @@ function irAEdicion(item) {
   } else if (tipo.value ==="comentarios") {
     query = {contenido: item.contenido , usuario: item.usuario , receta: item.receta};
   } else if (tipo.value ==="menus") {
-    query = {nombre: item.nombre , usuario: item.usuario_id , fecha: item.fecha};
+    query = {nombre: item.nombre , usuario: item.usuario , fecha: item.fecha};
   } else if (tipo.value ==="ingredientes") {
     query = {nombre: item.nombre , descripcion: item.descripcion , unidad_medida: item.unidad_medida};
   }

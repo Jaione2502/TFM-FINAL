@@ -38,7 +38,7 @@
 
           <div>
             <label>Usuario:</label>
-            <textarea v-model="usuario" disabled ></textarea>
+            <textarea v-model="usuario"   type="text" disabled ></textarea>
           </div>
 
            <div>
@@ -68,7 +68,7 @@
        <template v-if="tipo === 'menus'">
           <div>
             <label>Usuario:</label>
-            <input v-model="usuario" disabled></input>
+            <input v-model="usuario"   type="text" disabled ></input>
           </div>
           <div>
             <label>Nombre:</label>
@@ -108,11 +108,14 @@ const id = ref(Number(route.params.id));
 const nombre = ref(route.query.nombre || "");
 const descripcion =  ref(route.query.descripcion || "");
 const email = ref(route.query.email || "");
-const usuario = ref(route.query.usuario ?? "");
+
+const usuario = ref(route.query.usuario || "");
 const receta = ref(route.query.receta || "");
 const contenido = ref(route.query.contenido || "");
+
 const unidad_medida = ref(route.query.unidad_medida || "");
 const fecha = ref(route.query.fecha || "");
+
 
 const mensaje = ref("");
 const exito = ref(false);
@@ -122,36 +125,36 @@ const exito = ref(false);
 async function guardar() {
   try {
     let data = {};
-    if (tipo.value === "categorias") 
+    if (tipo === "categorias") 
       {
-        data = await actualizarItem("categoria", id.value, { 
+        const data = await actualizarItem("categoria", id, { 
           nombre: nombre.value, 
           descripcion: descripcion.value 
         });
       }
-    else if (tipo.value === "perfiles")  {
-       data = await actualizarItem("usuario", id.value, { 
+    else if (tipo === "perfiles")  {
+       const data = await actualizarItem("usuario", id, { 
           name: nombre.value, 
           email: email.value 
         });
       }
-    else if (tipo.value === "comentarios")  {
-       data = await actualizarItem("comentario", id.value, { 
+    else if (tipo === "comentarios")  {
+       const data = await actualizarItem("comentario", id, { 
           usuario: usuario.value, 
           receta: receta.value ,
           contenido: contenido.value
         });   
     }
-    else if (tipo.value === "ingredientes")  {
-       data = await actualizarItem("ingredientes", id.value, { 
+    else if (tipo === "ingredientes")  {
+       const data = await actualizarItem("ingrediente", id, { 
           nombre: nombre.value, 
           descripcion: descripcion.value,
           unidad_medida: unidad_medida.value 
         });
 
     }
-    else if (tipo.value === "menus")  {
-       data = await actualizarItem("menus", id.value, { 
+    else if (tipo === "menus")  {
+       const data = await actualizarItem("menu", id, { 
           usuario_id: usuario.value,
           nombre: nombre.value, 
           fecha: fecha.value 
@@ -161,7 +164,7 @@ async function guardar() {
 
     mensaje.value = data.message || "Cambios guardados correctamente";
     alert("Cambios guardados correctamente");
-    router.push({ name: "listar", params: { tipo: tipo.value } });
+    router.push({ name: "listar", params: { tipo } });
     exito.value = true;
   } catch (err) {
     mensaje.value = err.message || "Error al guardar";
@@ -175,24 +178,26 @@ async function eliminar() {
   if (!confirm("¿Seguro que quieres eliminar el elemento?")) return;
 
   try {
-     if (tipo.value === "categorias") {
-        await eliminarItem("categoria", id.value);
+     if (tipo === "categorias") {
+        await eliminarItem("categoria", id);
+
+     }else if (tipo ==="perfiles"){
+        await eliminarItem("usuario", id);
+    }else if (tipo ==="comentarios"){
+        await eliminarItem("comentario", id);
      }
-     else if (tipo.value ==="perfiles"){
-        await eliminarItem("usuario", id.value);
-    }
-      else if (tipo.value ==="comentarios"){
-        await eliminarItem("comentario", id.value);
+     else if (tipo ==="perfiles"){
+      await eliminarItem("usuario", id);
+     } 
+     else if (tipo === "ingredientes") {
+      await eliminarItem("ingrediente", id);
      }
-     else if (tipo.value === "ingredientes") {
-      await eliminarItem("ingredientes", id.value);
-     }
-     else if (tipo.value === "menus") {
-      await eliminarItem("menus", id.value);
+     else if (tipo === "menus") {
+      await eliminarItem("menu", id);
      }
     
     alert("Eliminado correctamente");
-    router.push({ name: "listar", params: { tipo: tipo.value } });
+    router.push({ name: "listar", params: { tipo } });
   } catch (err) {
     mensaje.value = err.message || "Error al eliminar";
     exito.value = false;

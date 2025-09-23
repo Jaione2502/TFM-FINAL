@@ -139,10 +139,6 @@ function irAEdicion(item) {
     query = { nombre: item.name, email: item.email };
   } else if (tipo.value ==="comentarios") {
     query = {contenido: item.contenido , usuario: item.usuario , receta: item.receta};
-  } else if (tipo.value ==="menus") {
-    query = {nombre: item.nombre , usuario: item.usuario_id , fecha: item.fecha};
-  } else if (tipo.value ==="ingredientes") {
-    query = {nombre: item.nombre , descripcion: item.descripcion , unidad_medida: item.unidad_medida};
   }
 
   router.push({

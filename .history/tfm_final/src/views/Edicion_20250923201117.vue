@@ -108,11 +108,20 @@ const id = ref(Number(route.params.id));
 const nombre = ref(route.query.nombre || "");
 const descripcion =  ref(route.query.descripcion || "");
 const email = ref(route.query.email || "");
+
+const usuario_id = ref(
+  route.query.usuario_id ? Number(route.query.usuario_id)
+  : localStorage.getItem("usuario_id") ? Number(localStorage.getItem("usuario_id"))
+  : null
+);
 const usuario = ref(route.query.usuario ?? "");
+
 const receta = ref(route.query.receta || "");
 const contenido = ref(route.query.contenido || "");
+
 const unidad_medida = ref(route.query.unidad_medida || "");
 const fecha = ref(route.query.fecha || "");
+
 
 const mensaje = ref("");
 const exito = ref(false);
@@ -152,7 +161,7 @@ async function guardar() {
     }
     else if (tipo.value === "menus")  {
        data = await actualizarItem("menus", id.value, { 
-          usuario_id: usuario.value,
+          usuario: usuario_id.value,
           nombre: nombre.value, 
           fecha: fecha.value 
         });

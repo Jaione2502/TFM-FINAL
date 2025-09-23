@@ -4,7 +4,7 @@
 
     <form class="comentario-form">
 
-      
+        <!-- Usuarios -->
          <div>
             <label for="usuario">Usuario:</label>
             <select id="usuario" v-model="usuario_id"  required>
@@ -16,15 +16,15 @@
         </div>
         <div>
             <label>Nombre:</label>
-            <input v-model="nombre" type="text" required />
+            <input v-model="nombre" type="text" />
           </div>
         <div>
             <label for="contenido">Fecha:</label>
-            <input v-model="fecha" type="date" name="fecha" id="fecha" required>
+            <input type="date" name="fecha" id="fecha">
         </div>
 
        
-        <button type="button" @click="guardarMenu" :disabled="loading">
+        <button type="button" @click="enviarMenu" :disabled="loading">
             Guardar
         </button>
 
@@ -36,18 +36,20 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getUsuarios, NuevoMenu } from "../services/api.js"; 
-import "../assets/styles/Categorias.css";
+import { getMenus,  getUsuarios, NuevoMenu } from "../services/api.js"; 
+import "../assets/styles/Comentarios.css";
 
-
-const fecha = ref("");
+const receta_id = ref("");
 const usuario_id = ref("");
-const nombre = ref("");
+const contenido = ref("");
+const name = ref([]);
 const usuarios = ref([]);
 const loading = ref(false);
 const mensaje = ref("");
 const error = ref("");
-const exito = ref(false);
+ 
+
+
 
 onMounted(async () => {
   try {
@@ -57,31 +59,33 @@ onMounted(async () => {
   }
 });
 
-async function guardarMenu() {
-  if (!nombre.value || !fecha.value || !usuario_id.value) {
-    mensaje.value = "Todos los campos son obligatorios";
-    exito.value = false;
-    return;
-  }
+
+
+
+const enviarMenu = async () => {
+  if (!usuario_id.value) return;
+
+  loading.value = true;
+  mensaje.value = "";
+  error.value = "";
 
   try {
-    const res = await NuevoMenu({
-      nombre: nombre.value,
-      fecha: fecha.value,
+    
+    await NuevoMenu({
       usuario_id: usuario_id.value,
+      receta_id: receta_id.value,
+      contenido: contenido.value,
     });
 
-    mensaje.value = res.message || "Menú creado correctamente";
-    exito.value = true;
-    
-    nombre.value = "";
-    fecha.value = "";
-    usuario_id.value = "";
+    mensaje.value = "Menu enviado con éxito";
+    receta_id.value = "";
+    contenido.value = "";
+    usuario_id.value ="";
   } catch (err) {
-    console.error(err);
-    mensaje.value = err.message || "Error al crear el menú";
-    exito.value = false;
+    error.value = "Error al enviar el menú";
+  } finally {
+    loading.value = false;
   }
-}
+};
 </script>
 
