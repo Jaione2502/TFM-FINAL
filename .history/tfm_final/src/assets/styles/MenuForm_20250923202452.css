@@ -1,6 +1,6 @@
 
-.comentario-container {
-  max-width: 800px;
+.menu-container {
+  max-width: 900px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #e7f7e7;
@@ -9,26 +9,21 @@
   margin: 20px auto;
 }
 
-.comentario-titulo {
-    text-align: center;
-    margin-bottom: 2rem;
-}
 
-
-.comentario-form {
+.menu-form {
   flex-direction: column;
   display: flex; 
   gap: 1.5rem; 
 }
 
-.comentario-form div {
+.menu-form div {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;            
 }
 
-.comentario-form select,
-.comentario-form textarea {
+.menu-form select,
+.menu-form textarea {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -37,7 +32,7 @@
 
 
 
-.comentario-form button {
+.menu-form button {
   padding: 0.4rem 0.8rem;   
   background-color: #4caf50;
   color: white;
@@ -48,7 +43,7 @@
   align-self: flex-start;    
 }
 
-.comentario-form button:hover {
+.menu-form button:hover {
   background: #43a047;
 }
 

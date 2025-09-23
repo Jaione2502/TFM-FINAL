@@ -9,11 +9,6 @@
   margin: 20px auto;
 }
 
-.comentario-titulo {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
 
 .comentario-form {
   flex-direction: column;
