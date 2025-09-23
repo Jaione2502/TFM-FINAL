@@ -1,6 +1,6 @@
 <template>
   <div class="comentario-container">
-    <h3 class="comentario-titulo">Crear Comentario</h3>
+    <h3>Crear Comentario</h3>
 
     <form class="comentario-form">
         <!-- Selección de Receta -->

@@ -5,7 +5,7 @@
     <form class="menu-form">
       <div>
         <label for="usuario">Usuario:</label>
-        <select id="usuario" v-model="usuario_id" required>
+        <select id="usuario" v-model="usuario" required>
           <option value="" disabled>Selecciona un usuario</option>
           <option
             v-for="usuario in usuarios"

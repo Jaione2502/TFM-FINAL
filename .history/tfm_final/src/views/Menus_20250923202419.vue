@@ -1,44 +1,44 @@
 <template>
-  <div class="menu-container">
-    <h3 class="menu-titulo">Crear Menú</h3>
+  <div class="comentario-container">
+    <h3>Crear Menú</h3>
 
-    <form class="menu-form">
-      <div>
-        <label for="usuario">Usuario:</label>
-        <select id="usuario" v-model="usuario_id" required>
-          <option value="" disabled>Selecciona un usuario</option>
-          <option
-            v-for="usuario in usuarios"
-            :key="usuario.id"
-            :value="usuario.id"
-          >
-            {{ usuario.name }}
-          </option>
-        </select>
-      </div>
-      <div>
-        <label>Nombre:</label>
-        <input v-model="nombre" type="text" required />
-      </div>
-      <div>
-        <label for="fecha">Fecha:</label>
-        <input v-model="fecha" type="date" name="fecha" id="fecha" required />
-      </div>
+    <form class="comentario-form">
 
-      <button type="button" @click="guardarMenu" :disabled="loading">
-        Guardar
-      </button>
+      
+         <div>
+            <label for="usuario">Usuario:</label>
+            <select id="usuario" v-model="usuario_id"  required>
+            <option value="" disabled>Selecciona un usuario</option>
+            <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario.id">
+                {{ usuario.name }}
+            </option>
+            </select>
+        </div>
+        <div>
+            <label>Nombre:</label>
+            <input v-model="nombre" type="text" required />
+          </div>
+        <div>
+            <label for="fecha">Fecha:</label>
+            <input v-model="fecha" type="date" name="fecha" id="fecha" required>
+        </div>
 
-      <p v-if="mensaje" class="mensaje-ok">{{ mensaje }}</p>
-      <p v-if="error" class="mensaje-error">{{ error }}</p>
-    </form>
+       
+        <button type="button" @click="guardarMenu" :disabled="loading">
+            Guardar
+        </button>
+
+        <p v-if="mensaje" class="mensaje-ok">{{ mensaje }}</p>
+        <p v-if="error" class="mensaje-error">{{ error }}</p>
+        </form>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getUsuarios, NuevoMenu } from "../services/api.js";
+import { getUsuarios, NuevoMenu } from "../services/api.js"; 
 import "../assets/styles/MenuForm.css";
+
 
 const fecha = ref("");
 const usuario_id = ref("");
@@ -73,7 +73,7 @@ async function guardarMenu() {
 
     mensaje.value = res.message || "Menú creado correctamente";
     exito.value = true;
-
+    
     nombre.value = "";
     fecha.value = "";
     usuario_id.value = "";
@@ -84,3 +84,4 @@ async function guardarMenu() {
   }
 }
 </script>
+

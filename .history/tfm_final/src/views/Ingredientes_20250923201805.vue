@@ -46,6 +46,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { NuevoIngrediente } from "../services/api.js";
 import "../assets/styles/Comentarios.css";
 
