@@ -43,7 +43,6 @@ import "../assets/styles/Categorias.css";
 const fecha = ref("");
 const usuario_id = ref("");
 const nombre = ref("");
-const usuarios = ref([]);
 const loading = ref(false);
 const mensaje = ref("");
 const error = ref("");
@@ -57,31 +56,33 @@ onMounted(async () => {
   }
 });
 
-async function guardarMenu() {
-  if (!nombre.value || !fecha.value || !usuario_id.value) {
-    mensaje.value = "Todos los campos son obligatorios";
-    exito.value = false;
-    return;
-  }
+const guardarMenu = async () => {
+  if (!nombre.value || !usuario_id.value || !fecha.value) return;
 
-  try {
+  loading.value = true;
+  mensaje.value = "";
+  error.value = "";
+
+  try {    
     const res = await NuevoMenu({
+      usuario_id: usuario_id.value,
       nombre: nombre.value,
       fecha: fecha.value,
-      usuario_id: usuario_id.value,
     });
 
-    mensaje.value = res.message || "Menú creado correctamente";
-    exito.value = true;
-    
-    nombre.value = "";
-    fecha.value = "";
+    mensaje.value = res.message || "Menu enviado con éxito";
     usuario_id.value = "";
+    nombre.value = "";
+    fecha.value ="";
+    exito.value = true;
+
   } catch (err) {
-    console.error(err);
-    mensaje.value = err.message || "Error al crear el menú";
-    exito.value = false;
-  }
-}
+    error.value = "Error al enviar el menú";
+  } finally {
+  loading.value = false; // ✅ no se queda el botón bloqueado
+  nombre.value = "";
+  fecha.value = "";
+  usuario_id.value = "";}
+};
 </script>
 

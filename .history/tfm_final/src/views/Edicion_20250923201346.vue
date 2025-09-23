@@ -108,11 +108,16 @@ const id = ref(Number(route.params.id));
 const nombre = ref(route.query.nombre || "");
 const descripcion =  ref(route.query.descripcion || "");
 const email = ref(route.query.email || "");
+
+
 const usuario = ref(route.query.usuario ?? "");
+
 const receta = ref(route.query.receta || "");
 const contenido = ref(route.query.contenido || "");
+
 const unidad_medida = ref(route.query.unidad_medida || "");
 const fecha = ref(route.query.fecha || "");
+
 
 const mensaje = ref("");
 const exito = ref(false);

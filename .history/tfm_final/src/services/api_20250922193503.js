@@ -270,9 +270,9 @@ export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      nombre,
-      descripcion,
-      unidad_medida
+      nombre: nombre,
+      descripcion: descripcion,
+      unidad_medida: unidad_medida
     })
   });
 

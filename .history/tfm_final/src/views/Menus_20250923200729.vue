@@ -65,21 +65,21 @@ async function guardarMenu() {
   }
 
   try {
-    const res = await NuevoMenu({
+    const res = await NuevoIngrediente({
       nombre: nombre.value,
       fecha: fecha.value,
       usuario_id: usuario_id.value,
     });
 
-    mensaje.value = res.message || "Menú creado correctamente";
+    mensaje.value = res.message || "Ingrediente creado correctamente";
     exito.value = true;
     
     nombre.value = "";
-    fecha.value = "";
-    usuario_id.value = "";
+    descripcion.value = "";
+    unidad_medida.value = "";
   } catch (err) {
     console.error(err);
-    mensaje.value = err.message || "Error al crear el menú";
+    mensaje.value = err.message || "Error al crear el ingrediente";
     exito.value = false;
   }
 }
