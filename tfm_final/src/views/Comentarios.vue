@@ -91,12 +91,13 @@ const enviarComentario = async () => {
       contenido: contenido.value,
     });
 
-    mensaje.value = "Comentario enviado con éxito";
+    mensaje.value = "Comentario generado correctamente";
     receta_id.value = "";
     contenido.value = "";
     usuario_id.value ="";
+   
   } catch (err) {
-    error.value = "Error al enviar el comentario";
+    error.value = "Error al generar el comentario";
   } finally {
     loading.value = false;
   }
