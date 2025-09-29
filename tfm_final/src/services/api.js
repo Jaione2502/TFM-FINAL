@@ -242,7 +242,7 @@ export async function NuevaCategoria({ nombre, descripcion }) {
 export async function NuevoUsuario({ name, email, password }) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/usuario', {
+  const res = await fetch('http://127.0.0.1:8000/api/usuario', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -259,6 +259,7 @@ export async function NuevoUsuario({ name, email, password }) {
 
   return data; 
 }
+
 
 export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
   const token = localStorage.getItem('token');
