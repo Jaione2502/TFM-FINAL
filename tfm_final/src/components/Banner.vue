@@ -79,6 +79,17 @@
             </ul>
           </li>
           <li>
+            <button class="menu-btn" @click="toggleInventario">
+              Inventario
+              <span class="arrow">{{ showInventario ? "▲" : "▼" }}</span>
+            </button>
+            <ul v-show="showInventario" class="submenu">
+              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'inventario' }}">Listar</RouterLink></li>
+              <li><RouterLink to="/inventario">Nuevo</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'inventario' }}">Buscar</RouterLink></li>
+            </ul>
+          </li>
+          <li>
             <button class="menu-btn" @click="toggleComentarios">
               Comentarios
               <span class="arrow">{{ showComentarios ? "▲" : "▼" }}</span>
@@ -115,6 +126,7 @@ const showMenus = ref(false);
 const showRecetas = ref(false);
 const showPerfiles = ref(false);
 const showComentarios = ref(false);
+const showInventario = ref(false);
 
 const toggleCategorias = () => {
   showCategorias.value = !showCategorias.value;
@@ -143,10 +155,9 @@ const togglePerfiles = () => {
 const toggleComentarios = () => {
   showComentarios.value = !showComentarios.value;
 };
-
-
-
-
+const toggleInventario = () => {
+  showInventario.value = !showInventario.value;
+};
 
 
 function toggleDrawer() {
@@ -181,6 +192,27 @@ onMounted(() => {
   color: white;
   transition: left 0.3s;
   z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;  
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0.8rem; 
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #222; 
+  border-radius: 1rem;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #fff; 
+  border-radius: 1rem;
+  border: 0.2rem solid #222; 
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #e7f7e7; 
 }
 
 .sidebar.open {
