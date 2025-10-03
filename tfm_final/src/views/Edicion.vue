@@ -4,100 +4,101 @@
 
     <form @submit.prevent="guardar">
       <!-- Categorias -->
-       <template v-if="tipo === 'categorias'">
-          <div>
-            <label>Nombre:</label>
-            <input v-model="nombre" type="text" />
-          </div>
+      <template v-if="tipo === 'categorias'">
+        <div>
+          <label>Nombre:</label>
+          <input v-model="form.nombre" type="text" />
+        </div>
 
-          <div>
-            <label>Descripción:</label>
-            <textarea v-model="descripcion"></textarea>
-          </div>
+        <div>
+          <label>Descripción:</label>
+          <textarea v-model="form.descripcion"></textarea>
+        </div>
+      </template>
 
-       </template>
-       <!-- Perfiles -->
+      <!-- Perfiles -->
       <template v-if="tipo === 'perfiles'">
-          <div>
-            <label>Nombre:</label>
-            <input v-model="nombre" type="text" />
-          </div>
 
-          <div>
-            <label>Email:</label>
-            <textarea v-model="email"></textarea>
-          </div>
-       </template>
+        <div>
+          <label>Nombre:</label>
+          <input v-model="form.nombre" type="text" />
+        </div>
 
-       <!-- Comentarios -->
-        <template v-if="tipo === 'comentarios'">
-          <div>
-            <label>Titulo receta:</label>
-            <input v-model="receta" type="text" disabled  />
-          </div>
+        <div>
+          <label>Email:</label>
+          <input v-model="form.email" type="email" />
+        </div>
+      </template>
 
-          <div>
-            <label>Usuario:</label>
-            <textarea v-model="usuario" disabled ></textarea>
-          </div>
+      <!-- Comentarios -->
+      <template v-if="tipo === 'comentarios'">
+        <div>
+          <label>Titulo receta:</label>
+          <input v-model="form.receta" type="text" disabled />
+        </div>
 
-           <div>
-            <label>Comentario:</label>
-            <textarea v-model="contenido"></textarea>
-          </div>
-       </template>
+        <div>
+          <label>Usuario:</label>
+          <input v-model="form.usuario" type="text" disabled />
+        </div>
 
-        <!-- Ingredientes -->
-       <template v-if="tipo === 'ingredientes'">
-          <div>
-            <label>Nombre:</label>
-            <input v-model="nombre" type="text" />
-          </div>
+        <div>
+          <label>Comentario:</label>
+          <textarea v-model="form.contenido"></textarea>
+        </div>
+      </template>
 
-          <div>
-            <label>Descripción:</label>
-            <textarea v-model="descripcion"></textarea>
-          </div>
-          <div>
-            <label>Unidad de Medida:</label>
-            <textarea v-model="unidad_medida"></textarea>
-          </div>
-       </template>
+      <!-- Ingredientes -->
+      <template v-if="tipo === 'ingredientes'">
+        <div>
+          <label>Nombre:</label>
+          <input v-model="form.nombre" type="text" />
+        </div>
 
-        <!-- Menus -->
-       <template v-if="tipo === 'menus'">
-          <div>
-            <label>Usuario:</label>
-            <input v-model="usuario" disabled></input>
-          </div>
-          <div>
-            <label>Nombre:</label>
-            <input v-model="nombre" type="text" />
-          </div>
+        <div>
+          <label>Descripción:</label>
+          <textarea v-model="form.descripcion"></textarea>
+        </div>
 
-          <div>
-            <label>Fecha:</label>
-            <input type="date" id="fecha" v-model="fecha" name="fecha" required>
-          </div>
-       </template>
+        <div>
+          <label>Unidad de Medida:</label>
+          <input v-model="form.unidad_medida" type="text" />
+        </div>
+      </template>
 
-        <!-- Inventario -->
+      <!-- Menus -->
+      <template v-if="tipo === 'menus'">
+        <div>
+          <label>Usuario:</label>
+          <input v-model="form.usuario" type="text" disabled />
+        </div>
+
+        <div>
+          <label>Nombre:</label>
+          <input v-model="form.nombre" type="text" />
+        </div>
+
+        <div>
+          <label>Fecha:</label>
+          <input type="date" v-model="form.fecha" required />
+        </div>
+      </template>
+       <!-- Inventario -->
        <template v-if="tipo === 'inventario'">
           <div>
             <label>Usuario:</label>
-            <input v-model.number="usuario" disabled></input>
+            <input v-model.number="form.usuario" disabled></input>
           </div>
           <div>
             <label>Ingrediente:</label>
-            <input v-model.number="ingrediente_id" type="text" />
+            <input v-model.number="form.ingrediente_id" type="text" />
           </div>
 
           <div>
             <label>Cantidad:</label>
-            <textarea v-model="cantidad"></textarea>
+            <textarea v-model="form.cantidad"></textarea>
           </div>
        </template>
-
 
       <div class="botones">
         <button type="submit">Guardar</button>
@@ -105,12 +106,14 @@
       </div>
     </form>
 
-    <p v-if="mensaje" :class="{ exito: exito, error: !exito }">{{ mensaje }}</p>
+    <p v-if="estado.mensaje" :class="{ exito: estado.exito, error: !estado.exito }">
+      {{ estado.mensaje }}
+    </p>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { actualizarItem, eliminarItem } from "../services/api.js";
 import "../assets/styles/Edicion.css";
@@ -122,62 +125,90 @@ const tipo = ref(route.params.tipo);
 const id = ref(Number(route.params.id));
 
 
-const nombre = ref(route.query.nombre || "");
-const descripcion =  ref(route.query.descripcion || "");
-const email = ref(route.query.email || "");
-const usuario = ref(route.query.usuario ?? "");
-const receta = ref(route.query.receta || "");
-const contenido = ref(route.query.contenido || "");
-const unidad_medida = ref(route.query.unidad_medida || "");
-const fecha = ref(route.query.fecha || "");
-const ingrediente = ref(route.query.ingrediente || "");
-const ingrediente_id = ref(route.query.ingrediente_id || "");
-const cantidad = ref(route.query.cantidad || "");
 
-const mensaje = ref("");
-const exito = ref(false);
+const form = reactive({
+  nombre: route.query.nombre || "",
+  descripcion: route.query.descripcion || "",
+  email: route.query.email || "",
+  usuario: route.query.usuario || "",
+  receta: route.query.receta || "",
+  contenido: route.query.contenido || "",
+  unidad_medida: route.query.unidad_medida || "",
+  fecha: route.query.fecha || "",
+  ingrediente_id : route.query.ingrediente_id || "",
+  cantidad : route.query.cantidad || ""
+});
+
+
+
+const estado = reactive({
+  mensaje: "",
+  exito: false
+});
+
+
+
+  function validarFormulario() {
+  if (tipo.value === "categorias") {
+    return form.nombre.trim() !== "" && form.descripcion.trim() !== "";
+  }
+  if (tipo.value === "perfiles") {
+    return form.nombre.trim() !== "" && form.email.trim() !== "";
+  }
+  if (tipo.value === "comentarios") {
+    return form.receta && form.usuario && form.contenido.trim() !== "";
+  }
+  if (tipo.value === "ingredientes") {
+    return form.nombre.trim() !== "" && form.descripcion.trim() !== "" && form.unidad_medida.trim() !== "";
+  }
+  if (tipo.value === "menus") {
+    return form.usuario && form.nombre.trim() !== "" && form.fecha;
+  }
+  return true; 
+}
 
 
 
 async function guardar() {
-  try {
-    let data = {};
-    if (tipo.value === "categorias") 
-      {
-        data = await actualizarItem("categoria", id.value, { 
-          nombre: nombre.value, 
-          descripcion: descripcion.value 
-        });
-      }
-    else if (tipo.value === "perfiles")  {
-       data = await actualizarItem("usuario", id.value, { 
-          name: nombre.value, 
-          email: email.value 
-        });
-      }
-    else if (tipo.value === "comentarios")  {
-       data = await actualizarItem("comentario", id.value, { 
-          usuario: usuario.value, 
-          receta: receta.value ,
-          contenido: contenido.value
-        });   
-    }
-    else if (tipo.value === "ingredientes")  {
-       data = await actualizarItem("ingredientes", id.value, { 
-          nombre: nombre.value, 
-          descripcion: descripcion.value,
-          unidad_medida: unidad_medida.value 
-        });
+  if (!validarFormulario()) {
+    estado.mensaje = "Todos los campos obligatorios deben completarse";
+    estado.exito = false;
+    return;
+  }
 
+  try {
+    let data;
+
+    if (tipo.value === "categorias") {
+      data = await actualizarItem("categoria", id.value, { 
+        nombre: form.nombre, 
+        descripcion: form.descripcion 
+      });
+    } else if (tipo.value === "perfiles") {
+      data = await actualizarItem("usuario", id.value, { 
+        name: form.nombre, 
+        email: form.email 
+      });
+    } else if (tipo.value === "comentarios") {
+      data = await actualizarItem("comentario", id.value, { 
+        usuario: form.usuario, 
+        receta: form.receta,
+        contenido: form.contenido
+      });   
+    } else if (tipo.value === "ingredientes") {
+      data = await actualizarItem("ingredientes", id.value, { 
+        nombre: form.nombre, 
+        descripcion: form.descripcion,
+        unidad_medida: form.unidad_medida 
+      });
+    } else if (tipo.value === "menus") {
+      data = await actualizarItem("menus", id.value, { 
+        usuario_id: form.usuario,
+        nombre: form.nombre, 
+        fecha: form.fecha 
+      });
     }
-    else if (tipo.value === "menus")  {
-       data = await actualizarItem("menus", id.value, { 
-          usuario_id: usuario.value,
-          nombre: nombre.value, 
-          fecha: fecha.value 
-        });
-    }
-    else if (tipo.value === "inventario")  {
+      else if (tipo.value === "inventario")  {
        data = await actualizarItem("inventario", id.value, { 
           usuario_id: usuario.value,
           ingrediente_id: ingrediente.value, 
@@ -185,47 +216,57 @@ async function guardar() {
         });
     }
 
-    mensaje.value = data.message || "Cambios guardados correctamente";
-    alert("Cambios guardados correctamente");
-    router.push({ name: "listar", params: { tipo: tipo.value } });
-    exito.value = true;
+
+    estado.mensaje = data.message || "Cambios guardados correctamente";
+    estado.exito = true;
+    
+  
+    setTimeout(() => { router.push({ name: "listar", params: { tipo: tipo.value } }); }, 1000);
+
+
+   
+    
   } catch (err) {
-    mensaje.value = err.message || "Error al guardar";
-    exito.value = false;
+   
+    estado.mensaje = err.message || "Error al guardar";
+    estado.exito = false;
   }
 }
 
-
-// Eliminar elemento 
 async function eliminar() {
   if (!confirm("¿Seguro que quieres eliminar el elemento?")) return;
 
   try {
-     if (tipo.value === "categorias") {
-        await eliminarItem("categoria", id.value);
-     }
-     else if (tipo.value ==="perfiles"){
-        await eliminarItem("usuario", id.value);
-    }
-      else if (tipo.value ==="comentarios"){
-        await eliminarItem("comentario", id.value);
-     }
-     else if (tipo.value === "ingredientes") {
-      await eliminarItem("ingredientes", id.value);
-     }
-     else if (tipo.value === "menus") {
-      await eliminarItem("menus", id.value);
-     }
-      else if (tipo.value === "inventario") {
-        await eliminarItem("inventario", id.value);
-    }
+
+   
+    const rutas = {
+      categorias: "categoria",
+      perfiles: "usuario",
+      comentarios: "comentario",
+      ingredientes: "ingredientes",
+      menus: "menus"
+    };
+
+    const rutaApi = rutas[tipo.value];
+
+    if (!rutaApi) throw new Error("Tipo no válido para eliminar");
+
+    await eliminarItem(rutaApi, id.value);
+
+  
+    estado.mensaje = "Eliminado correctamente";
+    estado.exito = true;
+
+  
+    setTimeout(() => {
+      router.push({ name: "listar", params: { tipo: tipo.value } });
+    }, 1000);
+
     
-    alert("Eliminado correctamente");
-    router.push({ name: "listar", params: { tipo: tipo.value } });
   } catch (err) {
-    mensaje.value = err.message || "Error al eliminar";
-    exito.value = false;
+    console.error(err);
+    estado.mensaje = err.message || "Error al eliminar";
+    estado.exito = false;
   }
 }
 </script>
-

@@ -1,83 +1,151 @@
 <template>
   <div>
-  
+    <!-- Botón móvil -->
     <button class="drawer-toggle" @click="toggleDrawer" v-if="!isDesktop">
       ☰
     </button>
 
-    <!-- Banner -->
-
-   <aside   :class="['sidebar', { open: drawerOpen, desktop: isDesktop }]" v-show="auth.isAuthenticated">
-
+    <!-- Sidebar -->
+    <aside
+      :class="['sidebar', { open: drawerOpen }]"
+      v-show="auth.isAuthenticated"
+    >
       <h2 class="sidebar-title">Panel de control</h2>
       <nav>
         <ul>
           <li><RouterLink to="/home">Inicio</RouterLink></li>
-          <li><button class="menu-btn" @click="togglePerfiles">
-              Perfiles
-              <span class="arrow">{{ showPerfiles ? "▲" : "▼" }}</span>
+
+          <!-- Perfiles -->
+          <li>
+            <button class="menu-btn" @click="togglePerfiles">
+              Perfiles <span class="arrow">{{ showPerfiles ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showPerfiles" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'perfiles' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'listar', params: { tipo: 'perfiles' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/perfiles">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'perfiles' }}">Buscar</RouterLink></li>
-            </ul></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'buscar', params: { tipo: 'perfiles' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
+            </ul>
+          </li>
+
+          <!-- Ingredientes -->
           <li>
             <button class="menu-btn" @click="toggleIngredientes">
               Ingredientes
               <span class="arrow">{{ showIngredientes ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showIngredientes" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'ingredientes' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'listar', params: { tipo: 'ingredientes' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/ingredientes">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'ingredientes' }}">Buscar</RouterLink></li>
-
+              <li>
+                <RouterLink
+                  :to="{ name: 'buscar', params: { tipo: 'ingredientes' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
+
+          <!-- Categorías -->
           <li>
             <button class="menu-btn" @click="toggleCategorias">
               Categorías
               <span class="arrow">{{ showCategorias ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showCategorias" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'categorias' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'listar', params: { tipo: 'categorias' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/categorias">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'categorias' }}">Buscar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'buscar', params: { tipo: 'categorias' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
+
+          <!-- Dietas -->
           <li>
             <button class="menu-btn" @click="toggleDietas">
-              Dietas
-              <span class="arrow">{{ showDietas ? "▲" : "▼" }}</span>
+              Dietas <span class="arrow">{{ showDietas ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showDietas" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'dietas' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink :to="{ name: 'listar', params: { tipo: 'dietas' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/dietas">Nueva</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'dietas' }}">Buscar</RouterLink></li>
+              <li>
+                <RouterLink :to="{ name: 'buscar', params: { tipo: 'dietas' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
+
+          <!-- Recetas -->
           <li>
             <button class="menu-btn" @click="toggleRecetas">
-              Recetas
-              <span class="arrow">{{ showRecetas ? "▲" : "▼" }}</span>
+              Recetas <span class="arrow">{{ showRecetas ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showRecetas" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'recetas' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'listar', params: { tipo: 'recetas' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/recetas">Nueva</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'recetas' }}">Buscar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'buscar', params: { tipo: 'recetas' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
+
+          <!-- Menús -->
           <li>
             <button class="menu-btn" @click="toggleMenus">
-              Menús
-              <span class="arrow">{{ showMenus ? "▲" : "▼" }}</span>
+              Menús <span class="arrow">{{ showMenus ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showMenus" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'menus' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink :to="{ name: 'listar', params: { tipo: 'menus' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/menus">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'menus' }}">Buscar</RouterLink></li>
+              <li>
+                <RouterLink :to="{ name: 'buscar', params: { tipo: 'menus' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
+
+          <!-- Comentarios -->
           <li>
             <button class="menu-btn" @click="toggleInventario">
               Inventario
@@ -95,9 +163,19 @@
               <span class="arrow">{{ showComentarios ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showComentarios" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'comentarios' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'listar', params: { tipo: 'comentarios' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/comentarios">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'comentarios' }}">Buscar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'buscar', params: { tipo: 'comentarios' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
         </ul>
@@ -105,84 +183,62 @@
     </aside>
 
     <!-- Overlay -->
-    <div class="overlay" v-if="drawerOpen && !isDesktop" @click="toggleDrawer"></div>
+    <div
+      class="overlay"
+      v-if="drawerOpen && !isDesktop"
+      @click="toggleDrawer"
+    ></div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
-import { auth } from '../auth';
-
-
+import { ref, onMounted } from "vue";
+import { auth } from "../auth";
 
 const drawerOpen = ref(false);
-const isDesktop = ref(window.innerWidth >= 768);
+const isDesktop = ref(window.innerWidth >= 1253);
 
-// Estado del submenu
-const showCategorias = ref(false);
-const showIngredientes = ref(false);
-const showDietas = ref(false);
-const showMenus = ref(false);
-const showRecetas = ref(false);
 const showPerfiles = ref(false);
+const showIngredientes = ref(false);
+const showCategorias = ref(false);
+const showDietas = ref(false);
+const showRecetas = ref(false);
+const showMenus = ref(false);
 const showComentarios = ref(false);
 const showInventario = ref(false);
 
-const toggleCategorias = () => {
-  showCategorias.value = !showCategorias.value;
-};
 
-const toggleIngredientes = () => {
-  showIngredientes.value = !showIngredientes.value;
-};
+const toggleDrawer = () => (drawerOpen.value = !drawerOpen.value);
+const togglePerfiles = () => (showPerfiles.value = !showPerfiles.value);
+const toggleIngredientes = () =>  (showIngredientes.value = !showIngredientes.value);
+const toggleCategorias = () => (showCategorias.value = !showCategorias.value);
+const toggleDietas = () => (showDietas.value = !showDietas.value);
+const toggleRecetas = () => (showRecetas.value = !showRecetas.value);
+const toggleMenus = () => (showMenus.value = !showMenus.value);
+const toggleComentarios = () =>  (showComentarios.value = !showComentarios.value);
 
-const toggleDietas = () => {
-  showDietas.value = !showDietas.value;
-};
-
-const toggleMenus = () => {
-  showMenus.value = !showMenus.value;
-};
-
-const toggleRecetas = () => {
-  showRecetas.value = !showRecetas.value;
-};
-
-const togglePerfiles = () => {
-  showPerfiles.value = !showPerfiles.value;
-};
-
-const toggleComentarios = () => {
-  showComentarios.value = !showComentarios.value;
-};
-const toggleInventario = () => {
-  showInventario.value = !showInventario.value;
-};
 
 
 function toggleDrawer() {
   drawerOpen.value = !drawerOpen.value;
 }
 
-// Detectar cambio de tamaño de pantalla
+
 function handleResize() {
-  isDesktop.value = window.innerWidth >= 768;
+  isDesktop.value = window.innerWidth >= 1253;
   if (isDesktop.value) drawerOpen.value = false;
 }
 
 onMounted(() => {
   window.addEventListener("resize", handleResize);
 });
-
-
 </script>
 
 <style scoped>
-/* Sidebar base */
 .sidebar {
   position: fixed;
   top: 0;
-  left: -220px;
+  left: 0;
   width: 220px;
   height: 100vh;
   background: linear-gradient(135deg, #333, #111);
@@ -190,7 +246,8 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   color: white;
-  transition: left 0.3s;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
   z-index: 1000;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   overflow-y: auto;  
@@ -214,31 +271,22 @@ onMounted(() => {
 .sidebar::-webkit-scrollbar-thumb:hover {
   background: #e7f7e7; 
 }
-
 .sidebar.open {
-  left: 0;
+  transform: translateX(0);
 }
-
-.sidebar.desktop {
-  left: 0;
-}
-
 .sidebar-title {
   font-size: 1.5rem;
   margin-bottom: 2rem;
   text-align: center;
-  color: white;
 }
-
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
-
 .sidebar li {
   margin: 1rem 0;
 }
-
 .sidebar a,
 .menu-btn {
   color: white;
@@ -248,23 +296,18 @@ onMounted(() => {
   border-radius: 6px;
   transition: background 0.3s;
 }
-
 .sidebar a:hover,
 .menu-btn:hover {
   background: rgba(255, 255, 255, 0.2);
 }
-
-/* Submenu */
 .submenu {
   margin-left: 15px;
   font-size: 0.9em;
   transition: all 0.3s ease;
 }
-
 .submenu li {
   margin: 0.5rem 0;
 }
-
 .menu-btn {
   background: none;
   border: none;
@@ -276,12 +319,10 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
 }
-
 .arrow {
   font-size: 0.8em;
 }
 
-/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -292,7 +333,6 @@ onMounted(() => {
   z-index: 900;
 }
 
-/* Botón abrir móvil */
 .drawer-toggle {
   position: fixed;
   top: 1rem;
@@ -307,9 +347,38 @@ onMounted(() => {
   cursor: pointer;
 }
 
-@media (min-width: 768px) {
+.logout-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1200;
+  padding: 0.5rem 1rem;
+}
+.logout-btn {
+  background: #ff4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background: #cc0000;
+}
+
+@media (min-width: 1253px) {
+  .sidebar {
+    transform: translateX(0);
+  }
+  .overlay {
+    display: none !important;
+  }
   .drawer-toggle {
     display: none;
+  }
+  main {
+    margin-left: 220px;
+    transition: margin-left 0.3s;
   }
 }
 </style>
