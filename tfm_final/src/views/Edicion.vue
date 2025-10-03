@@ -18,6 +18,7 @@
 
       <!-- Perfiles -->
       <template v-if="tipo === 'perfiles'">
+
         <div>
           <label>Nombre:</label>
           <input v-model="form.nombre" type="text" />
@@ -82,6 +83,22 @@
           <input type="date" v-model="form.fecha" required />
         </div>
       </template>
+       <!-- Inventario -->
+       <template v-if="tipo === 'inventario'">
+          <div>
+            <label>Usuario:</label>
+            <input v-model.number="form.usuario" disabled></input>
+          </div>
+          <div>
+            <label>Ingrediente:</label>
+            <input v-model.number="form.ingrediente_id" type="text" />
+          </div>
+
+          <div>
+            <label>Cantidad:</label>
+            <textarea v-model="form.cantidad"></textarea>
+          </div>
+       </template>
 
       <div class="botones">
         <button type="submit">Guardar</button>
@@ -108,6 +125,7 @@ const tipo = ref(route.params.tipo);
 const id = ref(Number(route.params.id));
 
 
+
 const form = reactive({
   nombre: route.query.nombre || "",
   descripcion: route.query.descripcion || "",
@@ -116,8 +134,11 @@ const form = reactive({
   receta: route.query.receta || "",
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
-  fecha: route.query.fecha || ""
+  fecha: route.query.fecha || "",
+  ingrediente_id : route.query.ingrediente_id || "",
+  cantidad : route.query.cantidad || ""
 });
+
 
 
 const estado = reactive({
@@ -187,12 +208,21 @@ async function guardar() {
         fecha: form.fecha 
       });
     }
+      else if (tipo.value === "inventario")  {
+       data = await actualizarItem("inventario", id.value, { 
+          usuario_id: usuario.value,
+          ingrediente_id: ingrediente.value, 
+          cantidad: cantidad.value 
+        });
+    }
+
 
     estado.mensaje = data.message || "Cambios guardados correctamente";
     estado.exito = true;
     
   
     setTimeout(() => { router.push({ name: "listar", params: { tipo: tipo.value } }); }, 1000);
+
 
    
     
@@ -207,6 +237,7 @@ async function eliminar() {
   if (!confirm("¿Seguro que quieres eliminar el elemento?")) return;
 
   try {
+
    
     const rutas = {
       categorias: "categoria",
@@ -230,6 +261,7 @@ async function eliminar() {
     setTimeout(() => {
       router.push({ name: "listar", params: { tipo: tipo.value } });
     }, 1000);
+
     
   } catch (err) {
     console.error(err);

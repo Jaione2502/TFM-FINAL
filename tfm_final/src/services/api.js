@@ -181,10 +181,6 @@ export async function getComentariosByID(id) {
   return res.json();
 }
 
-
-
-
-
 export async function getMenus() {
   const token = localStorage.getItem('token');
 
@@ -214,6 +210,40 @@ export async function getMenuByID(id) {
 
   if (!res.ok) {
     throw new Error('Error al obtener el menú con ID ' + id);
+  }
+
+  return res.json();
+}
+
+export async function getInventario() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/inventario', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener inventario');
+  }
+
+  return res.json();
+}
+
+export async function getInventarioByID(id) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch(`http://localhost:8000/api/inventario/${id}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error('Error al obtener el inventario con ID ' + id);
   }
 
   return res.json();
@@ -303,6 +333,31 @@ export async function NuevoMenu({ usuario_id, nombre, fecha }) {
       usuario_id: usuario_id,
       nombre: nombre,
       fecha: fecha
+    })
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.message || "Error al crear el menú");
+  }
+
+  return data;
+}
+
+export async function NuevoInventario({ usuario_id, ingrediente_id, cantidad }) {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:8000/api/inventario', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      usuario_id: usuario_id,
+      ingrediente_id: ingrediente_id,
+      cantidad: cantidad
     })
   });
 

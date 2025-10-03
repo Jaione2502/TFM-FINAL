@@ -147,6 +147,17 @@
 
           <!-- Comentarios -->
           <li>
+            <button class="menu-btn" @click="toggleInventario">
+              Inventario
+              <span class="arrow">{{ showInventario ? "▲" : "▼" }}</span>
+            </button>
+            <ul v-show="showInventario" class="submenu">
+              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'inventario' }}">Listar</RouterLink></li>
+              <li><RouterLink to="/inventario">Nuevo</RouterLink></li>
+              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'inventario' }}">Buscar</RouterLink></li>
+            </ul>
+          </li>
+          <li>
             <button class="menu-btn" @click="toggleComentarios">
               Comentarios
               <span class="arrow">{{ showComentarios ? "▲" : "▼" }}</span>
@@ -194,17 +205,24 @@ const showDietas = ref(false);
 const showRecetas = ref(false);
 const showMenus = ref(false);
 const showComentarios = ref(false);
+const showInventario = ref(false);
+
 
 const toggleDrawer = () => (drawerOpen.value = !drawerOpen.value);
 const togglePerfiles = () => (showPerfiles.value = !showPerfiles.value);
-const toggleIngredientes = () =>
-  (showIngredientes.value = !showIngredientes.value);
+const toggleIngredientes = () =>  (showIngredientes.value = !showIngredientes.value);
 const toggleCategorias = () => (showCategorias.value = !showCategorias.value);
 const toggleDietas = () => (showDietas.value = !showDietas.value);
 const toggleRecetas = () => (showRecetas.value = !showRecetas.value);
 const toggleMenus = () => (showMenus.value = !showMenus.value);
-const toggleComentarios = () =>
-  (showComentarios.value = !showComentarios.value);
+const toggleComentarios = () =>  (showComentarios.value = !showComentarios.value);
+
+
+
+function toggleDrawer() {
+  drawerOpen.value = !drawerOpen.value;
+}
+
 
 function handleResize() {
   isDesktop.value = window.innerWidth >= 1253;
@@ -231,6 +249,27 @@ onMounted(() => {
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;  
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0.8rem; 
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #222; 
+  border-radius: 1rem;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #fff; 
+  border-radius: 1rem;
+  border: 0.2rem solid #222; 
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #e7f7e7; 
 }
 .sidebar.open {
   transform: translateX(0);
