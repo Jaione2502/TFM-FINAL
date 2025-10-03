@@ -152,9 +152,19 @@
               <span class="arrow">{{ showInventario ? "▲" : "▼" }}</span>
             </button>
             <ul v-show="showInventario" class="submenu">
-              <li><RouterLink :to="{ name: 'listar', params: { tipo: 'inventario' }}">Listar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'listar', params: { tipo: 'inventario' } }"
+                  >Listar</RouterLink
+                >
+              </li>
               <li><RouterLink to="/inventario">Nuevo</RouterLink></li>
-              <li><RouterLink :to="{ name: 'buscar', params: { tipo: 'inventario' }}">Buscar</RouterLink></li>
+              <li>
+                <RouterLink
+                  :to="{ name: 'buscar', params: { tipo: 'inventario' } }"
+                  >Buscar</RouterLink
+                >
+              </li>
             </ul>
           </li>
           <li>
@@ -207,21 +217,15 @@ const showMenus = ref(false);
 const showComentarios = ref(false);
 const showInventario = ref(false);
 
-
 const toggleDrawer = () => (drawerOpen.value = !drawerOpen.value);
 const togglePerfiles = () => (showPerfiles.value = !showPerfiles.value);
-const toggleIngredientes = () =>  (showIngredientes.value = !showIngredientes.value);
+const toggleIngredientes = () => (showIngredientes.value = !showIngredientes.value);
 const toggleCategorias = () => (showCategorias.value = !showCategorias.value);
 const toggleDietas = () => (showDietas.value = !showDietas.value);
 const toggleRecetas = () => (showRecetas.value = !showRecetas.value);
 const toggleMenus = () => (showMenus.value = !showMenus.value);
-const toggleComentarios = () =>  (showComentarios.value = !showComentarios.value);
-
-
-
-function toggleDrawer() {
-  drawerOpen.value = !drawerOpen.value;
-}
+const toggleComentarios = () => (showComentarios.value = !showComentarios.value);
+const toggleInventario = () => ( showInventario.value = !showInventario.value);
 
 
 function handleResize() {
@@ -250,26 +254,26 @@ onMounted(() => {
   transition: transform 0.3s ease;
   z-index: 1000;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-  overflow-y: auto;  
+  overflow-y: auto;
 }
 
 .sidebar::-webkit-scrollbar {
-  width: 0.8rem; 
+  width: 0.8rem;
 }
 
 .sidebar::-webkit-scrollbar-track {
-  background: #222; 
+  background: #222;
   border-radius: 1rem;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background: #fff; 
+  background: #fff;
   border-radius: 1rem;
-  border: 0.2rem solid #222; 
+  border: 0.2rem solid #222;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
-  background: #e7f7e7; 
+  background: #e7f7e7;
 }
 .sidebar.open {
   transform: translateX(0);
@@ -301,12 +305,15 @@ onMounted(() => {
   background: rgba(255, 255, 255, 0.2);
 }
 .submenu {
-  margin-left: 15px;
+  padding-left: 1.5rem; 
   font-size: 0.9em;
   transition: all 0.3s ease;
+  border-left: 2px solid rgba(255, 255, 255, 0.1); 
+  margin-top: 0.5rem;
 }
 .submenu li {
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
+  padding-left: 0.5rem;
 }
 .menu-btn {
   background: none;
