@@ -1,6 +1,9 @@
-// Login
+
+
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function login(email, password) {
-  const res = await fetch("http://localhost:8000/api/login", {
+  const res = await fetch(`${API_URL}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -11,7 +14,7 @@ export async function login(email, password) {
   }
 
   const data = await res.json();
-  localStorage.setItem("token", data.token); // Guardar token
+  localStorage.setItem("token", data.token); 
   return data;
 }
 
@@ -20,7 +23,8 @@ export async function login(email, password) {
 export async function getCategorias() {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/categoria', {
+
+  const res = await fetch(`${API_URL}/categoria`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -37,7 +41,7 @@ export async function getCategorias() {
 export async function getUsuarios() {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/usuario', {
+  const res = await fetch(`${API_URL}/usuario`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -55,7 +59,7 @@ export async function getUsuarios() {
 export async function getComentarios() {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/comentario', {
+  const res = await fetch(`${API_URL}/comentario`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -73,7 +77,7 @@ export async function getComentarios() {
 export async function getRecetas() {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/recetas', {
+  const res = await fetch(`${API_URL}/recetas`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -91,7 +95,7 @@ export async function getRecetas() {
 export async function getCategoriasByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`http://localhost:8000/api/categoria/${id}`, {
+  const res = await fetch(`${API_URL}/categoria/${id}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -109,7 +113,7 @@ export async function getCategoriasByID(id) {
 export async function getUsuarioByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`http://localhost:8000/api/usuario/${id}`, {
+  const res = await fetch(`${API_URL}/usuario/${id}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -126,7 +130,7 @@ export async function getUsuarioByID(id) {
 export async function getIngredientes() {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/ingredientes', {
+  const res = await fetch(`${API_URL}/ingredientes`, {
 
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -145,7 +149,7 @@ export async function getIngredientes() {
 export async function getIngredientesByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`http://localhost:8000/api/ingredientes/${id}`, {
+  const res = await fetch(`${API_URL}/ingredientes/${id}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -163,7 +167,7 @@ export async function getIngredientesByID(id) {
 export async function getComentariosByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`http://localhost:8000/api/comentario/${id}`, {
+  const res = await fetch(`${API_URL}/comentario/${id}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -184,7 +188,7 @@ export async function getComentariosByID(id) {
 export async function getMenus() {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/menus', {
+  const res = await fetch(`${API_URL}/menus`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -201,7 +205,7 @@ export async function getMenus() {
 export async function getMenuByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`http://localhost:8000/api/menus/${id}`, {
+  const res = await fetch(`${API_URL}/menus/${id}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -218,7 +222,7 @@ export async function getMenuByID(id) {
 export async function NuevaCategoria({ nombre, descripcion }) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/categoria', {
+  const res = await fetch(`${API_URL}/categoria`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -242,7 +246,7 @@ export async function NuevaCategoria({ nombre, descripcion }) {
 export async function NuevoUsuario({ name, email, password }) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://127.0.0.1:8000/api/usuario', {
+  const res = await fetch(`${API_URL}/usuario`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -264,7 +268,7 @@ export async function NuevoUsuario({ name, email, password }) {
 export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/ingredientes', {
+  const res = await fetch(`${API_URL}/ingredientes`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -289,7 +293,7 @@ export async function NuevoIngrediente({ nombre, descripcion, unidad_medida }) {
 export async function NuevoMenu({ usuario_id, nombre, fecha }) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/menus', {
+  const res = await fetch(`${API_URL}/menus`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -317,7 +321,7 @@ export async function NuevoComentario({usuario_id,receta_id,contenido}) {
 
   const token = localStorage.getItem('token');
 
-  const res = await fetch('http://localhost:8000/api/comentario', {
+  const res = await fetch(`${API_URL}/comentario`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -342,7 +346,7 @@ export async function actualizarItem(tipo, id, datos) {
   const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
+    const res = await fetch(`${API_URL}/${tipo}/${id}`, {
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -377,7 +381,7 @@ export async function actualizarItem(tipo, id, datos) {
 
 export async function eliminarItem(tipo, id) {
   const token = localStorage.getItem("token");
-  const res = await fetch(`http://localhost:8000/api/${tipo}/${id}`, {
+  const res = await fetch(`${API_URL}/${tipo}/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` }
   });

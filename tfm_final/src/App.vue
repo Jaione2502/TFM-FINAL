@@ -35,7 +35,7 @@ import { auth } from "./auth";
 
 const router = useRouter();
 
-// Mantener sesión si hay token en localStorage
+
 onMounted(() => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -62,9 +62,8 @@ const logout = () => {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 300;
+  z-index: 1200;
   padding: 0.5rem 1rem;
-
 }
 
 .logout-btn {
@@ -81,16 +80,18 @@ const logout = () => {
 }
 
 .banner-top {
-  position: relative;  
+  position: relative;
   width: 100%;
   z-index: 200;
   flex-shrink: 0;
 }
 
-
 .content {
   justify-content: center;
-  padding-top: 80px; 
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 }
 
 footer {
@@ -99,4 +100,25 @@ footer {
   padding: 0.5rem;
   flex-shrink: 0;
 }
+
+@media (max-width: 768px) {
+  .logout-container {
+    padding: 0.4rem 0.8rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .logout-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 70px;
+  }
+}
+
+
 </style>

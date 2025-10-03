@@ -49,3 +49,13 @@ button:hover {
   color: red;
   margin-top: 1rem;
 }
+
+@media (max-width: 768px) {
+  .alta-categoria-container {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}
