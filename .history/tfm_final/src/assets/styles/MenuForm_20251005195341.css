@@ -14,10 +14,13 @@
     margin-bottom: 2rem;
 }
 
-.menu-nombre .menu-fecha {
-    display: flex;
-    margin-top: 1rem;
+.menu-nombre {
+    width: 100%;
+    height: 2rem;
+    font-size: 1rem;
+    padding: 0.5rem;
 }
+
 
 .menu-form {
   flex-direction: column;
@@ -58,10 +61,8 @@
 
 .mensaje-ok {
   color: green;
-  margin-top: 1rem;
 }
 
 .mensaje-error {
   color: red;
-  margin-top: 1rem;
 }

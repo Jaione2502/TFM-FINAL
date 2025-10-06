@@ -23,7 +23,7 @@
         </select>
       </div>
 
-      <div>
+      <div class="menu-nombre">
         <label for="cantidad">Cantidad:</label>
         <input v-model.trim="cantidad" placeholder="Escribe una cantidad..." type="text" name="cantidad" id="cantidad" required :disabled="loading" />
       </div>

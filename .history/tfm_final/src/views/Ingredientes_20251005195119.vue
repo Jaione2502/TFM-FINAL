@@ -2,7 +2,7 @@
   <div class="alta-categoria-container">
     <h1>Nuevo Ingrediente</h1>
 
-    <form @submit.prevent="guardarIngrediente">
+    <form @submit.prevent="guardarIngrediente" >
       <div class="form-group">
         <label for="nombre">Nombre:</label>
         <input

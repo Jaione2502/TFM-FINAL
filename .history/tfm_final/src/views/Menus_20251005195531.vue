@@ -2,8 +2,8 @@
   <div class="menu-container">
     <h3 class="menu-titulo">Crear Menú</h3>
 
-    <form @submit.prevent="guardarMenu">
-      <div class="menu-form">
+    <form class="" @submit.prevent="guardarMenu">
+      <div class="">
         <label for="usuario">Usuario:</label>
         <select id="usuario" v-model="usuario_id" required>
           <option value="" disabled>Selecciona un usuario</option>

@@ -15,9 +15,15 @@
 }
 
 .menu-nombre .menu-fecha {
-    display: flex;
-    margin-top: 1rem;
+    width: 100%;
+    gap: 0.5rem;
 }
+
+.menu-fecha {
+    width: 100%;
+    gap: 0.5rem;
+}
+
 
 .menu-form {
   flex-direction: column;
@@ -58,10 +64,8 @@
 
 .mensaje-ok {
   color: green;
-  margin-top: 1rem;
 }
 
 .mensaje-error {
   color: red;
-  margin-top: 1rem;
 }

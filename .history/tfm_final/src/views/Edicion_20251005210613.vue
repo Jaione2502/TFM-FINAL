@@ -165,7 +165,7 @@ const estado = reactive({
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
+    return form.usuario && form.ingrediente && form.cantidad;
   }
   return true; 
 }
@@ -213,9 +213,9 @@ async function guardar() {
     }
       else if (tipo.value === "inventario")  {
        data = await actualizarItem("inventario", id.value, { 
-          usuario: form.usuario,
-          ingrediente: form.ingrediente, 
-          cantidad: form.cantidad
+          usuario_id: usuario.value,
+          ingrediente: ingrediente.value, 
+          cantidad: cantidad.value 
         });
     }
 
@@ -247,8 +247,7 @@ async function eliminar() {
       perfiles: "usuario",
       comentarios: "comentario",
       ingredientes: "ingredientes",
-      menus: "menus",
-      inventario: "inventario"
+      menus: "menus"
     };
 
     const rutaApi = rutas[tipo.value];
