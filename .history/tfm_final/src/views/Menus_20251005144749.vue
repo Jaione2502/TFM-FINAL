@@ -2,8 +2,8 @@
   <div class="menu-container">
     <h3 class="menu-titulo">Crear Menú</h3>
 
-    <form @submit.prevent="guardarMenu">
-      <div class="menu-form">
+    <form class="formulario">
+      <div>
         <label for="usuario">Usuario:</label>
         <select id="usuario" v-model="usuario_id" required>
           <option value="" disabled>Selecciona un usuario</option>
@@ -16,13 +16,13 @@
           </option>
         </select>
       </div>
-      <div class="menu-nombre">
+      <div class="form-group">
         <label>Nombre:</label>
-        <textarea v-model="nombre" type="text" placeholder="Escribe un nombre..." required />
+        <input v-model="nombre" type="text" placeholder="Escribe un nombre..." required />
       </div>
-      <div class="menu-fecha">
+      <div class="form-group">
         <label for="fecha">Fecha:</label>
-        <input type="date" v-model="fecha" required />
+        <input v-model="fecha" type="date" name="fecha" id="fecha" required />
       </div>
 
       <button type="button" @click="guardarMenu" :disabled="loading">

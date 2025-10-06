@@ -16,7 +16,7 @@
 
 .menu-nombre .menu-fecha {
     display: flex;
-    margin-top: 1rem;
+    gap: 1rem;
 }
 
 .menu-form {

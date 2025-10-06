@@ -2,8 +2,8 @@
   <div class="menu-container">
     <h3 class="menu-titulo">Crear Inventario</h3>
 
-    <form @submit.prevent="guardarInventario">
-      <div class="menu-form">
+    <form class="menu-form" @submit.prevent="guardarInventario">
+      <div>
         <label for="usuario">Usuario:</label>
         <select id="usuario" v-model.number="usuario_id" required :disabled="loading">
           <option value="" disabled>Selecciona un usuario</option>
@@ -13,7 +13,7 @@
         </select>
       </div>
 
-      <div class="menu-form">
+      <div>
         <label for="ingrediente">Ingrediente:</label>
         <select id="ingrediente" v-model.number="ingrediente_id" required :disabled="loading">
           <option value="" disabled>Selecciona un ingrediente</option>

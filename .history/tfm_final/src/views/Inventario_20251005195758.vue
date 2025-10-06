@@ -13,7 +13,7 @@
         </select>
       </div>
 
-      <div class="menu-form">
+      <div>
         <label for="ingrediente">Ingrediente:</label>
         <select id="ingrediente" v-model.number="ingrediente_id" required :disabled="loading">
           <option value="" disabled>Selecciona un ingrediente</option>

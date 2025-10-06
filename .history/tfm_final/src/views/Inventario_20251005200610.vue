@@ -25,7 +25,7 @@
 
       <div>
         <label for="cantidad">Cantidad:</label>
-        <input v-model.trim="cantidad" placeholder="Escribe una cantidad..." type="text" name="cantidad" id="cantidad" required :disabled="loading" />
+        <input class="menu-nombre" v-model.trim="cantidad" placeholder="Escribe una cantidad..." type="text" name="cantidad" id="cantidad" required :disabled="loading" />
       </div>
 
       <button type="submit" :disabled="loading">Guardar</button>

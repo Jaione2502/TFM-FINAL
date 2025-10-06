@@ -165,7 +165,7 @@ const estado = reactive({
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
+    return form.usuario && form.ingrediente && form.cantidad;
   }
   return true; 
 }

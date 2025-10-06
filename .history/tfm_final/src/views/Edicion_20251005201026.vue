@@ -135,7 +135,7 @@ const form = reactive({
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
-  ingrediente : route.query.ingrediente || "",
+  ingrediente_id : route.query.ingrediente_id || "",
   cantidad : route.query.cantidad || ""
 });
 
@@ -163,9 +163,6 @@ const estado = reactive({
   }
   if (tipo.value === "menus") {
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
-  }
-  if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
   }
   return true; 
 }
@@ -206,16 +203,16 @@ async function guardar() {
       });
     } else if (tipo.value === "menus") {
       data = await actualizarItem("menus", id.value, { 
-        usuario: form.usuario,
+        usuario_id: form.usuario,
         nombre: form.nombre, 
         fecha: form.fecha 
       });
     }
       else if (tipo.value === "inventario")  {
        data = await actualizarItem("inventario", id.value, { 
-          usuario: form.usuario,
-          ingrediente: form.ingrediente, 
-          cantidad: form.cantidad
+          usuario_id: usuario.value,
+          ingrediente_id: ingrediente.value, 
+          cantidad: cantidad.value 
         });
     }
 
@@ -247,8 +244,7 @@ async function eliminar() {
       perfiles: "usuario",
       comentarios: "comentario",
       ingredientes: "ingredientes",
-      menus: "menus",
-      inventario: "inventario"
+      menus: "menus"
     };
 
     const rutaApi = rutas[tipo.value];
