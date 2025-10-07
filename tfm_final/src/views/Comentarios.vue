@@ -45,8 +45,10 @@
 <script setup>
 import { reactive, ref, onMounted } from "vue";
 import { getRecetas, getUsuarios, NuevoComentario } from "../services/api.js"; 
+import { useRouter } from "vue-router";
 import "../assets/styles/Comentarios.css";
 
+const router = useRouter();
 
 const form = reactive({
   receta_id: "",
@@ -103,7 +105,7 @@ async function enviarComentario() {
     estado.exito = true;
   
     Object.keys(form).forEach(key => form[key] = "");
-   
+    router.push({ name: "listar", params: { tipo: "comentarios" } });
   } 
   catch (err) 
   {
