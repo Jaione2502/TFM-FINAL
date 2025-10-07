@@ -50,7 +50,9 @@ const estado = reactive({
 
 
 function validarFormulario() {
-  return Object.values(form).every(value => value.trim() !== "");
+  return ["name", "email", "password"].every(
+    key => form[key] && String(form[key]).trim() !== ""
+  );
 }
 
 async function guardarUsuario() {
