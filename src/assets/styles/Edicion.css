@@ -1,0 +1,32 @@
+
+
+.edicion-container {
+  max-width: 800px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #e7f7e7;
+  margin-left: 220px; 
+  padding: 20px;
+  margin: 20px auto;
+}
+
+form div {
+  margin-bottom: 1rem;
+}
+
+.botones button {
+  margin-right: 10px;
+}
+
+.exito {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+}
