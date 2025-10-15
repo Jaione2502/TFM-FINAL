@@ -1,0 +1,91 @@
+<template>
+  <div class="comentario-container">
+    <h3>Crear Menú</h3>
+
+    <form class="comentario-form">
+
+      
+         <div>
+            <label for="usuario">Usuario:</label>
+            <select id="usuario" v-model="usuario_id"  required>
+            <option value="" disabled>Selecciona un usuario</option>
+            <option v-for="usuario in usuarios" :key="usuario.id" :value="usuario.id">
+                {{ usuario.name }}
+            </option>
+            </select>
+        </div>
+        <div>
+            <label>Nombre:</label>
+            <input v-model="nombre" type="text" required />
+          </div>
+        <div>
+            <label for="contenido">Fecha:</label>
+            <input v-model="fecha" type="date" name="fecha" id="fecha" required>
+        </div>
+
+       
+        <button type="button" @click="guardarMenu" :disabled="loading">
+            Guardar
+        </button>
+
+        <p v-if="mensaje" class="mensaje-ok">{{ mensaje }}</p>
+        <p v-if="error" class="mensaje-error">{{ error }}</p>
+        </form>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { getUsuarios, NuevoMenu } from "../services/api.js"; 
+import "../assets/styles/Categorias.css";
+
+
+const fecha = ref("");
+const usuario_id = ref("");
+const nombre = ref("");
+const usuarios = ref([]);
+const loading = ref(false);
+const mensaje = ref("");
+const error = ref("");
+const exito = ref(false);
+
+onMounted(async () => {
+  try {
+    usuarios.value = await getUsuarios();
+  } catch (err) {
+    error.value = "Error al cargar los usuarios";
+  }
+});
+
+const guardarMenu = async () => {
+  if (!nombre.value || !usuario_id.value || !fecha.value);
+
+  loading.value = true;
+  error.value = "";
+  mensaje.value = "Todos los campos son obligatorios";
+  exito.value = false;
+  return;
+
+  try {    
+    const res = await NuevoMenu({
+      usuario_id: usuario_id.value,
+      nombre: nombre.value,
+      fecha: fecha.value,
+    });
+
+    mensaje.value = res.message || "Menu enviado con éxito";
+    usuario_id.value = "";
+    nombre.value = "";
+    fecha.value ="";
+    exito.value = true;
+
+  } catch (err) {
+    error.value = "Error al enviar el menú";
+  } finally {
+  loading.value = false; // ✅ no se queda el botón bloqueado
+  nombre.value = "";
+  fecha.value = "";
+  usuario_id.value = "";}
+};
+</script>
+
