@@ -41,7 +41,7 @@
       <!-- Menús -->
       <div v-if="tipo === 'menus'" :key="resultado.id" class="resultado-card" @click="irAEdicion(resultado)">
         <h2>{{ resultado.nombre }}</h2>
-        <p>{{ resultado.usuario }}</p>
+        <p>{{ resultado.usuario_id }}</p>
         <p>{{ resultado.fecha }} </p>
       </div>
       <!-- Inventario -->
@@ -232,7 +232,7 @@ function irAEdicion(item) {
   } else if (tipo.value ==="comentarios") {
     query = {contenido: item.contenido , usuario: item.usuario , receta: item.receta};
   } else if (tipo.value ==="menus") {
-    query = {nombre: item.nombre , usuario: item.usuario , fecha: item.fecha};
+    query = {nombre: item.nombre , usuario: item.usuario_id , fecha: item.fecha};
   } else if (tipo.value ==="inventario") {
     query = {cantidad: item.cantidad , ingrediente: item.ingrediente , usuario: item.usuario};
   } else if (tipo.value ==="ingredientes") {

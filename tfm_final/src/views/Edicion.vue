@@ -87,11 +87,11 @@
        <template v-if="tipo === 'inventario'">
           <div>
             <label>Usuario:</label>
-            <input v-model="form.usuario" disabled></input>
+            <input v-model.number="form.usuario" disabled></input>
           </div>
           <div>
             <label>Ingrediente:</label>
-            <input v-model="form.ingrediente" type="text" />
+            <input v-model.number="form.ingrediente" type="text" />
           </div>
 
           <div>
