@@ -8,8 +8,6 @@ import Menús from "../views/Menus.vue";
 import Inventario from "../views/Inventario.vue";
 import Login from "../views/Login.vue";
 import Comentarios from "../views/Comentarios.vue";
-import Dietas from "../views/Dietas.vue";
-import Recetas from "../views/Recetas.vue";
 import { auth } from "../auth.js"
 
 const routes = [
@@ -22,8 +20,6 @@ const routes = [
   { path: "/inventario", component: Inventario, meta: { requiresAuth: true }},
   { path: "/perfiles", component: Perfiles, meta: { requiresAuth: true } },
   { path: "/comentarios", component: Comentarios, meta: { requiresAuth: true } },
-  { path: "/dietas", name: "Dietas", component: Dietas, meta: { requiresAuth: true } },
-  { path: "/recetas", name: "Recetas", component: Recetas, meta: { requiresAuth: true } },
   { path: "/:tipo/listar", name: "listar", component: () => import("../views/Listar.vue") },
   { path: "/:tipo/buscar", name: "buscar", component: () => import("../views/Buscar.vue"), props: true },
   { path: "/:tipo/editar/:id", name: "edicion", component: () => import("../views/Edicion.vue"), props: true, meta: { requiresAuth: true } }
