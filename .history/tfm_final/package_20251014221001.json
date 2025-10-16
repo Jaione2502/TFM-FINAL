@@ -4,10 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest",
+    "test": "npm run test:vitest",
     "test:vitest": "vitest",
     "test:vitest:ui": "vitest --ui",
     "test:vitest:run": "vitest run",
