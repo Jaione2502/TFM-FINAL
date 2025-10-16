@@ -252,7 +252,7 @@ onMounted(() => {
   color: white;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
-  z-index: 1000;
+  z-index: 5;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
 }
@@ -371,6 +371,15 @@ onMounted(() => {
 }
 .logout-btn:hover {
   background: #cc0000;
+}
+
+main {
+  margin-left: 0;
+  transition: margin-left 0.3s;
+}
+
+.sidebar.open ~ main {
+  margin-left: 220px;
 }
 
 @media (min-width: 1253px) {
