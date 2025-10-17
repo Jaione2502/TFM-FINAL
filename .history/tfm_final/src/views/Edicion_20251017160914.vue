@@ -136,6 +136,7 @@ const form = reactive({
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
   ingrediente : route.query.ingrediente || "",
+  ingrediente_id : route.query.ingrediente || "",
   cantidad : route.query.cantidad || ""
 });
 
@@ -165,7 +166,7 @@ const estado = reactive({
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
+    return form.usuario && form.ingrediente_id && form.cantidad.trim() !== "";
   }
   return true; 
 }

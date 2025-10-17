@@ -136,6 +136,7 @@ const form = reactive({
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
   ingrediente : route.query.ingrediente || "",
+  ingrediente_id : route.query.ingrediente_id || "",
   cantidad : route.query.cantidad || ""
 });
 
