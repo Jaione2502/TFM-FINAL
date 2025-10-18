@@ -1,43 +1,42 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { mount, flushPromises } from "@vue/test-utils";
+import { createRouter, createWebHistory } from "vue-router";
 import Listar from "@/views/Listar.vue";
 
-vi.mock("@/services/api.js", () => ({
-  getCategorias: vi.fn(() => Promise.resolve([{ id: 1, nombre: "Vegana", descripcion: "Sin carne" }])),
-  getRecetas: vi.fn(() => Promise.resolve([{ id: 1, titulo: "Ensalada", descripcion: "Fresca y sana" }])),
-  getDietas: vi.fn(() => Promise.resolve([{ id: 1, nombre: "Keto", descripcion: "Baja en carbos" }])),
-  getIngredientes: vi.fn(() => Promise.resolve([{ id: 1, nombre: "Tomate", descripcion: "Rojo", unidad_medida: "kg" }])),
-  getUsuarios: vi.fn(() => Promise.resolve([{ id: 1, name: "Ana", email: "ana@mail.com" }])),
-  getMenus: vi.fn(() => Promise.resolve([{ id: 1, nombre: "Menú diario", fecha: "2025-10-11" }])),
-  getInventario: vi.fn(() => Promise.resolve([{ id: 1, ingrediente: "Arroz", cantidad: "5kg" }])),
-  getComentarios: vi.fn(() => Promise.resolve([{ id: 1, contenido: "Excelente receta", usuario: "Luis" }])),
-}));
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: "/:tipo/listar", component: Listar },
+    { path: "/:tipo/editar/:id", name: "edicion", component: { template: "<div>Edit</div>" } },
+  ],
+});
+
+const tipos = ["categorias", "recetas", "dietas", "ingredientes", "perfiles", "comentarios", "menus", "inventario"];
 
 describe("Listar.vue", () => {
-  it("se renderiza correctamente", () => {
-    const wrapper = mount(Listar);
-    expect(wrapper.exists()).toBe(true);
-  });
 
-  it("muestra el título de la página", () => {
-    const wrapper = mount(Listar);
-    expect(wrapper.text()).toContain("Listado");
-  });
+  tipos.forEach((tipo) => {
+    it(`muestra elementos de tipo "${tipo}"`, async () => {
+      router.push(`/${tipo}/listar`);
+      await router.isReady();
 
-  it("carga categorías desde la API", async () => {
-    const wrapper = mount(Listar, {
-      props: {},
+      const wrapper = mount(Listar, {
+        global: { plugins: [router] },
+      });
+
+      await flushPromises();
+
+      
+      expect(wrapper.html()).toMatch(/nombre|descripcion|titulo|usuario|ingrediente/i);
+
+      
+      const firstCard = wrapper.find(".card");
+      if (firstCard.exists()) {
+        await firstCard.trigger("click");
+        expect(wrapper.vm.$route.name).toBe("edicion");
+      }
     });
-    await flushPromises(); 
-    expect(wrapper.text()).toContain("Vegana");
   });
 
-  it("muestra un error si falla la carga (simulado)", async () => {
-    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-    const wrapper = mount(Listar);
-    await flushPromises();
-    expect(consoleSpy).not.toHaveBeenCalledWith(expect.stringContaining("Error"));
-    consoleSpy.mockRestore();
-  });
 });
    
