@@ -17,8 +17,8 @@
         <label for="ingrediente">Ingrediente:</label>
         <select id="ingrediente" v-model.number="ingrediente_id" required :disabled="loading">
           <option value="" disabled>Selecciona un ingrediente</option>
-          <option v-for="ing in ingredientes" :key="ing.id" :value="ing.id">
-            {{ ing.titulo || ing.nombre || ing.id }}
+          <option v-for="ing in ingrediente_id" :key="ing.id" :value="ing.id">
+            {{ ing.titulo || ing.titulo }}
           </option>
         </select>
       </div>
@@ -40,16 +40,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getUsuarios, getIngredientes, NuevoInventario } from "../services/api.js";
-import { useRouter } from "vue-router";
 import "../assets/styles/MenuForm.css";
-
-const router = useRouter();
 
 const usuario_id = ref("");
 const ingrediente_id = ref("");
 const cantidad = ref("");
 const usuarios = ref([]);
-const ingredientes = ref([]);
 const loading = ref(false);
 const mensaje = ref("");
 const error = ref("");
@@ -69,7 +65,7 @@ onMounted(async () => {
 });
 
 async function guardarInventario() {
-  if (!cantidad.value || !ingrediente_id.value || !usuario_id.value) {
+  if (!nombre.value || !fecha.value || !usuario_id.value) {
     mensaje.value = "Todos los campos son obligatorios";
     exito.value = false;
     return;
@@ -82,16 +78,12 @@ async function guardarInventario() {
       usuario_id: usuario_id.value,
     });
 
-    mensaje.value = res.message || "Inventario creado correctamente";
+    mensaje.value = res.message || "Menú creado correctamente";
     exito.value = true;
 
     cantidad.value = "";
     ingrediente_id.value = "";
     usuario_id.value = "";
-    setTimeout(() => {
-      router.push({ name: "listar", params: { tipo: "inventario" }});
-  }, 1000);
-
   } catch (err) {
     console.error(err);
     mensaje.value = err.message || "Error al crear el menú";

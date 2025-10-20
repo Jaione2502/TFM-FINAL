@@ -89,7 +89,7 @@ async function guardarInventario() {
     ingrediente_id.value = "";
     usuario_id.value = "";
     setTimeout(() => {
-      router.push({ name: "listar", params: { tipo: "inventario" }});
+      router.push("/listar/inventario");
   }, 1000);
 
   } catch (err) {
