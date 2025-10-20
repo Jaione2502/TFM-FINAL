@@ -40,10 +40,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getUsuarios, getIngredientes, NuevoInventario } from "../services/api.js";
-import { useRouter } from "vue-router";
 import "../assets/styles/MenuForm.css";
-
-const router = useRouter();
 
 const usuario_id = ref("");
 const ingrediente_id = ref("");
@@ -82,16 +79,12 @@ async function guardarInventario() {
       usuario_id: usuario_id.value,
     });
 
-    mensaje.value = res.message || "Inventario creado correctamente";
+    mensaje.value = res.message || "Menú creado correctamente";
     exito.value = true;
 
     cantidad.value = "";
     ingrediente_id.value = "";
     usuario_id.value = "";
-    setTimeout(() => {
-      router.push({ name: "listar", params: { tipo: "inventario" }});
-  }, 1000);
-
   } catch (err) {
     console.error(err);
     mensaje.value = err.message || "Error al crear el menú";
