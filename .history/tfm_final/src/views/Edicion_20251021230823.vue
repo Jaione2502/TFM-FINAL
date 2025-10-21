@@ -91,7 +91,7 @@
           </div>
           <div>
             <label>Ingrediente:</label>
-            <input v-model="form.ingrediente" type="text" />
+            <input v-model="form.ingrediente_id" type="text" />
           </div>
 
           <div>
@@ -135,7 +135,7 @@ const form = reactive({
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
-  ingrediente: route.query.ingrediente || "",
+  ingrediente_id: route.query.ingrediente || "",
   cantidad: route.query.cantidad || ""
 });
 
@@ -165,7 +165,7 @@ const estado = reactive({
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
+    return form.usuario && form.ingrediente_id && form.cantidad.trim() !== "";
   }
   return true; 
 }
@@ -214,7 +214,7 @@ async function guardar() {
       else if (tipo.value === "inventario")  {
        data = await actualizarItem("inventario", id.value, { 
           usuario: form.usuario,
-          ingrediente_id: form.ingrediente, 
+          ingrediente_id: form.ingrediente_id, 
           cantidad: form.cantidad
         });
     }

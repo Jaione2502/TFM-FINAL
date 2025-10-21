@@ -135,8 +135,8 @@ const form = reactive({
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
-  ingrediente: route.query.ingrediente || "",
-  cantidad: route.query.cantidad || ""
+  ingrediente : route.query.ingrediente || "",
+  cantidad : route.query.cantidad || ""
 });
 
 
