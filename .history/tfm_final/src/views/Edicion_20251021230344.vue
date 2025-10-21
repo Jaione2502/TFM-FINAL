@@ -213,8 +213,6 @@ async function guardar() {
     }
       else if (tipo.value === "inventario")  {
        data = await actualizarItem("inventario", id.value, { 
-          usuario: form.usuario,
-          ingrediente_id: form.ingrediente, 
           cantidad: form.cantidad
         });
     }

@@ -47,11 +47,7 @@
 <script setup>
 import { ref } from "vue";
 import { NuevoIngrediente } from "../services/api.js";
-import { useRouter } from "vue-router";
 import "../assets/styles/Comentarios.css";
-
-const router = useRouter();
-
 
 
 const nombre = ref("");

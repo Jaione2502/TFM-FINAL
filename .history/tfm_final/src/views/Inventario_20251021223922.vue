@@ -99,4 +99,7 @@ async function guardarInventario() {
   }
 }
 
+setTimeout(() => {
+      router.push({ name: "listar", params: { tipo: tipo.value } });
+    }, 1000);
 </script>

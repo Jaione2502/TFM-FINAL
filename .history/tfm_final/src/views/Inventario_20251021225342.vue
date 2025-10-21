@@ -46,7 +46,6 @@ import "../assets/styles/MenuForm.css";
 const router = useRouter();
 
 const usuario_id = ref("");
-const ingrediente_id = ref("");
 const cantidad = ref("");
 const usuarios = ref([]);
 const ingredientes = ref([]);

@@ -41,9 +41,6 @@ import { getUsuarios, NuevoMenu } from "../services/api.js";
 import { useRouter } from "vue-router";
 import "../assets/styles/MenuForm.css";
 
-const router = useRouter();
-
-
 const fecha = ref("");
 const usuario_id = ref("");
 const nombre = ref("");

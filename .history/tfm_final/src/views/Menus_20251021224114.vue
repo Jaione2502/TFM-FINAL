@@ -38,11 +38,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getUsuarios, NuevoMenu } from "../services/api.js";
-import { useRouter } from "vue-router";
 import "../assets/styles/MenuForm.css";
-
-const router = useRouter();
-
 
 const fecha = ref("");
 const usuario_id = ref("");
@@ -81,9 +77,6 @@ async function guardarMenu() {
     nombre.value = "";
     fecha.value = "";
     usuario_id.value = "";
-    setTimeout(() => {
-      router.push({ name: "listar", params: { tipo: "menus" }});
-  }, 1000);
   } catch (err) {
     console.error(err);
     mensaje.value = err.message || "Error al crear el menú";
