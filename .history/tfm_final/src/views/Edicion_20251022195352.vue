@@ -91,7 +91,7 @@
           </div>
           <div class="menu-form">
             <label for="ingrediente">Ingrediente:</label>
-            <select id="ingrediente" v-model="form.ingrediente" :disabled="loading">
+            <select id="ingrediente" v-model="form.ingrediente_id" :disabled="loading">
               <option value="" disabled>Selecciona un ingrediente</option>
               <option v-for="ing in ingredientes" :key="ing.id" :value="ing.id">
                 {{ ing.nombre }}

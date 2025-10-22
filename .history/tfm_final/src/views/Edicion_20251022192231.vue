@@ -91,10 +91,10 @@
           </div>
           <div class="menu-form">
             <label for="ingrediente">Ingrediente:</label>
-            <select id="ingrediente" v-model="form.ingrediente" :disabled="loading">
+            <select id="ingrediente" v-model.number="ingrediente_id" required :disabled="loading">
               <option value="" disabled>Selecciona un ingrediente</option>
               <option v-for="ing in ingredientes" :key="ing.id" :value="ing.id">
-                {{ ing.nombre }}
+                {{ ing.titulo || ing.nombre || ing.id }}
               </option>
             </select>
           </div>
@@ -120,8 +120,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { onMounted } from "vue";
-import { getIngredientes, actualizarItem, eliminarItem } from "../services/api.js";
+import { actualizarItem, eliminarItem } from "../services/api.js";
 import "../assets/styles/Edicion.css";
 
 const route = useRoute();
@@ -141,7 +140,7 @@ const form = reactive({
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
-  ingrediente_id: route.query.ingrediente || "",
+  ingrediente: route.query.ingrediente || "",
   cantidad: route.query.cantidad || ""
 });
 
@@ -150,17 +149,6 @@ const form = reactive({
 const estado = reactive({
   mensaje: "",
   exito: false
-});
-
-onMounted(async () => {
-  if (tipo.value === "inventario") {
-    try {
-      ingredientes.value = await getIngredientes();
-    } catch (err) {
-      estado.mensaje = "Error al cargar los ingredientes";
-      estado.exito = false;
-    }
-  }
 });
 
 
@@ -182,7 +170,7 @@ onMounted(async () => {
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente_id && form.cantidad.trim() !== "";
+    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
   }
   return true; 
 }
