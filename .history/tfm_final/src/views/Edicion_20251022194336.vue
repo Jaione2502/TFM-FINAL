@@ -182,7 +182,7 @@ onMounted(async () => {
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente_id && form.cantidad.trim() !== "";
+    return form.usuario && form.cantidad.trim() !== "";
   }
   return true; 
 }

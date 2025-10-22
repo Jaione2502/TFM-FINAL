@@ -141,7 +141,7 @@ const form = reactive({
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
-  ingrediente_id: route.query.ingrediente || "",
+  ingrediente: route.query.ingrediente || "",
   cantidad: route.query.cantidad || ""
 });
 
@@ -182,7 +182,7 @@ onMounted(async () => {
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente_id && form.cantidad.trim() !== "";
+    return form.usuario && form.ingrediente && form.cantidad.trim() !== "";
   }
   return true; 
 }

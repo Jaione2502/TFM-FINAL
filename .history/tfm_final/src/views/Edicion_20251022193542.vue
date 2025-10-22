@@ -91,10 +91,10 @@
           </div>
           <div class="menu-form">
             <label for="ingrediente">Ingrediente:</label>
-            <select id="ingrediente" v-model="form.ingrediente" :disabled="loading">
+            <select id="ingrediente" v-model.number="form.ingrediente" :disabled="loading">
               <option value="" disabled>Selecciona un ingrediente</option>
               <option v-for="ing in ingredientes" :key="ing.id" :value="ing.id">
-                {{ ing.nombre }}
+                {{ ing.titulo || ing.nombre || ing.id }}
               </option>
             </select>
           </div>
@@ -141,7 +141,7 @@ const form = reactive({
   contenido: route.query.contenido || "",
   unidad_medida: route.query.unidad_medida || "",
   fecha: route.query.fecha || "",
-  ingrediente_id: route.query.ingrediente || "",
+  ingrediente: route.query.ingrediente || "",
   cantidad: route.query.cantidad || ""
 });
 
@@ -182,7 +182,7 @@ onMounted(async () => {
     return form.usuario && form.nombre.trim() !== "" && form.fecha;
   }
   if (tipo.value === "inventario") {
-    return form.usuario && form.ingrediente_id && form.cantidad.trim() !== "";
+    return form.usuario && form.cantidad.trim() !== "";
   }
   return true; 
 }
