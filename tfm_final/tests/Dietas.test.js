@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import Dietas from "@/views/Dietas.vue";
+import Dietas from "../src/views/Dietas.vue";
 
 describe("Dietas.vue", () => {
 

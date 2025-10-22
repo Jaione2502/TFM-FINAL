@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { mount, flushPromises } from "@vue/test-utils";
 import { createRouter, createWebHistory } from "vue-router";
-import Listar from "@/views/Listar.vue";
+import Listar from "../src/views/Listar.vue";
 
 const router = createRouter({
   history: createWebHistory(),

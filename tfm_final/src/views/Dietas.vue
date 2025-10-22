@@ -16,7 +16,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import "../assets/styles/Estilos.css";
+import "../assets/styles/Dietas.css";
 
 const dietas = ref([]);
 const error = ref("");

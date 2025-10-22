@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import Recetas from "@/views/Recetas.vue";
+import Recetas from "../src/views/Recetas.vue";
 
 describe("Recetas.vue", () => {
 

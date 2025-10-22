@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import "../assets/styles/Estilos.css";
+import "../assets/styles/Recetas.css";
 
 const recetas = ref([]);
 const error = ref("");
