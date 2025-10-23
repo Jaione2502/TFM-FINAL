@@ -14,7 +14,7 @@ const router = createRouter({
   ],
 });
 
-const tipos = ["categorias", "recetas", "dietas"];
+const tipos = ["categorias", "dietas", "recetas"];
 
 beforeAll(async () => {
   const res = await fetch(`${API_URL}/login`, {
@@ -22,13 +22,14 @@ beforeAll(async () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email: "test@example.com", password: "password" }),
   });
+
   const data = await res.json();
   TOKEN = data.access_token;
 
   if (!TOKEN) throw new Error("No se pudo obtener token de autenticación");
 });
 
-describe("Listar.vue (API real)", () => {
+describe("Listar.vue (junior API test)", () => {
   tipos.forEach((tipo) => {
     it(`muestra elementos de tipo "${tipo}" desde la API`, async () => {
       router.push(`/${tipo}/listar`);
@@ -46,8 +47,7 @@ describe("Listar.vue (API real)", () => {
 
       await flushPromises();
 
-      // Verificar que se cargaron elementos
-      expect(wrapper.html()).toMatch(/nombre|descripcion|titulo|usuario/i);
+      expect(wrapper.html()).toMatch(/nombre|descripcion|titulo/i);
 
       const firstCard = wrapper.find(".card");
       if (firstCard.exists()) {
