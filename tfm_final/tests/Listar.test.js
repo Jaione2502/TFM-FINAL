@@ -1,10 +1,10 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { mount, flushPromises } from "@vue/test-utils";
 import { createRouter, createWebHistory } from "vue-router";
 import Listar from "../src/views/Listar.vue";
 
-const API_URL = "http://127.0.0.1:8000/recetas_api"; 
-const TOKEN = "1|bcpugBufuZRzFIBkYeIszPeN572Aw3YkHkwbyR2Y2531edab";
+const API_URL = "http://127.0.0.1:8000/api";
+let TOKEN = "";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,6 +15,18 @@ const router = createRouter({
 });
 
 const tipos = ["categorias", "recetas", "dietas"];
+
+beforeAll(async () => {
+  const res = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: "test@example.com", password: "password" }),
+  });
+  const data = await res.json();
+  TOKEN = data.access_token;
+
+  if (!TOKEN) throw new Error("No se pudo obtener token de autenticación");
+});
 
 describe("Listar.vue (API real)", () => {
   tipos.forEach((tipo) => {
@@ -34,7 +46,7 @@ describe("Listar.vue (API real)", () => {
 
       await flushPromises();
 
-      // Esperamos que el HTML incluya texto de los datos
+      // Verificar que se cargaron elementos
       expect(wrapper.html()).toMatch(/nombre|descripcion|titulo|usuario/i);
 
       const firstCard = wrapper.find(".card");
@@ -45,4 +57,3 @@ describe("Listar.vue (API real)", () => {
     });
   });
 });
-
