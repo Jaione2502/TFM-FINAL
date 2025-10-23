@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import {
   name,
   mail,
@@ -5,12 +6,12 @@ import {
   mensaje,
   exito,
   guardarUsuario,
-} from "../../src/services/perfilTest.js";
+} from "../src/services/perfilTest.js";
 
-import { NuevoUsuario } from "../../src/services/api.js";
+import { NuevoUsuario } from "../src/services/api.js";
 
-jest.mock("../../src/services/api.js", () => ({
-  NuevoUsuario: jest.fn(),
+vi.mock("../src/services/api.js", () => ({
+  NuevoUsuario: vi.fn(),
 }));
 
 describe("perfilTest", () => {
@@ -20,7 +21,7 @@ describe("perfilTest", () => {
     pass.value = "";
     mensaje.value = "";
     exito.value = false;
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test("no guarda usuario si hay campos vacíos", async () => {

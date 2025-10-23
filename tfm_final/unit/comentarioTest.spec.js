@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import {
   receta_id,
   usuario_id,
@@ -7,15 +8,15 @@ import {
   cargarRecetas,
   cargarUsuarios,
   crearComentario,
-} from "../../src/services/comentarioTest.js";
+} from "../src/services/comentarioTest.js";
 
-import { getRecetas, getUsuarios, NuevoComentario } from "../../src/services/api.js";
+import { getRecetas, getUsuarios, NuevoComentario } from "../src/services/api.js";
 
 
-jest.mock("../../src/services/api.js", () => ({
-  getRecetas: jest.fn(),
-  getUsuarios: jest.fn(),
-  NuevoComentario: jest.fn(),
+vi.mock("../src/services/api.js", () => ({
+  getRecetas: vi.fn(),
+  getUsuarios: vi.fn(),
+  NuevoComentario: vi.fn(),
 }));
 
 describe("comentarioTest", () => {
@@ -25,7 +26,7 @@ describe("comentarioTest", () => {
     contenido.value = "";
     loading.value = false;
     error.value = null;
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test("cargarRecetas devuelve recetas", async () => {

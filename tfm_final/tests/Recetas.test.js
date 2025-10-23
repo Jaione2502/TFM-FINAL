@@ -1,28 +1,51 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, vi } from "vitest";
 import { mount, flushPromises } from "@vue/test-utils";
 import Recetas from "../src/views/Recetas.vue";
 
 const API_URL = "http://127.0.0.1:8000/api";
-let TOKEN = "";
+const TOKEN = "1|bcpugBufuZRzFIBkYeIszPeN572Aw3YkHkwbyR2Y2531edab";
 
-beforeAll(async () => {
-  const res = await fetch(`${API_URL}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: "test@example.com", password: "password" }),
-  });
-  const data = await res.json();
-  TOKEN = data.access_token;
+beforeAll(() => {
+  global.localStorage = {
+    getItem: (key) => (key === "token" ? TOKEN : null),
+    setItem: () => {},
+    removeItem: () => {},
+  };
 
-  if (!TOKEN) throw new Error("No se pudo obtener token de autenticación");
+  global.fetch = vi.fn(() =>
+    Promise.resolve({
+      ok: true,
+      status: 200,
+      headers: new Headers({ 'Content-Type': 'application/json' }),
+      json: () =>
+        Promise.resolve([
+          { titulo: "Paella", descripcion: "Arroz con mariscos" },
+          { titulo: "Ensalada", descripcion: "Lechuga y tomate" },
+        ])
+    })
+  );
 });
 
 describe("Recetas.vue", () => {
-  it("carga recetas desde la API", async () => {
-    const wrapper = mount(Recetas, { props: { apiToken: TOKEN, apiUrl: API_URL } });
+  it("se renderiza correctamente", () => {
+    const wrapper = mount(Recetas, { props: { apiUrl: API_URL } });
+    expect(wrapper.exists()).toBe(true);
+  });
 
+  it("muestra el título de la página", () => {
+    const wrapper = mount(Recetas, { props: { apiUrl: API_URL } });
+    expect(wrapper.text()).toContain("Recetas");
+  });
+
+  it("carga recetas desde la API", async () => {
+    const wrapper = mount(Recetas, {
+      props: { 
+        apiUrl: API_URL,
+        apiToken: TOKEN
+      }
+    });
     await flushPromises();
-    
-    expect(wrapper.html()).toMatch(/titulo|descripcion/i);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    expect(wrapper.html()).toMatch(/Paella|Ensalada/i);
   });
 });

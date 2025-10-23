@@ -1,15 +1,16 @@
+import { vi } from 'vitest';
 import {
   nombre,
   descripcion,
   mensaje,
   exito,
   guardarCategoria,
-} from "../../src/services/categoriaTest.js";
+} from "../src/services/categoriaTest.js";
 
-import { NuevaCategoria } from "../../src/services/api.js";
+import { NuevaCategoria } from "../src/services/api.js";
 
-jest.mock("../../src/services/api.js", () => ({
-  NuevaCategoria: jest.fn(),
+vi.mock("../src/services/api.js", () => ({
+  NuevaCategoria: vi.fn(),
 }));
 
 describe("categoriaTest", () => {
@@ -18,7 +19,7 @@ describe("categoriaTest", () => {
     descripcion.value = "";
     mensaje.value = "";
     exito.value = false;
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test("no guarda categoría si hay campos vacíos", async () => {

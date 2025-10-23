@@ -1,7 +1,8 @@
-import { eliminarItem } from "../../src/services/api.js";
+import { vi } from 'vitest';
+import { eliminarItem } from "../src/services/api.js";
 
-jest.mock("../../src/services/api.js", () => ({
-  eliminarItem: jest.fn(),
+vi.mock("../src/services/api.js", () => ({
+  eliminarItem: vi.fn(),
 }));
 
 // eliminar categorias:
@@ -13,15 +14,15 @@ describe("eliminar categoria", () => {
   let id;
 
   beforeEach(() => {
-    confirmMock = jest.spyOn(global, "confirm");
-    pushMock = jest.fn();
+    confirmMock = vi.spyOn(global, "confirm");
+    pushMock = vi.fn();
 
     tipo = { value: "categorias" };
     id = { value: 1 };
 
     estado = { mensaje: "", exito: false };
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   async function eliminar() {
@@ -80,15 +81,15 @@ describe("eliminar categoria", () => {
   let id;
 
   beforeEach(() => {
-    confirmMock = jest.spyOn(global, "confirm");
-    pushMock = jest.fn();
+    confirmMock = vi.spyOn(global, "confirm");
+    pushMock = vi.fn();
 
     tipo = { value: "comentarios" };
     id = { value: 42 }; 
 
     estado = { mensaje: "", exito: false };
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   async function eliminar() {
@@ -158,15 +159,15 @@ describe("eliminar categoria", () => {
   let id;
 
   beforeEach(() => {
-    confirmMock = jest.spyOn(global, "confirm");
-    pushMock = jest.fn();
+    confirmMock = vi.spyOn(global, "confirm");
+    pushMock = vi.fn();
 
     tipo = { value: "perfiles" };
     id = { value: 7 }; 
 
     estado = { mensaje: "", exito: false };
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   async function eliminar() {

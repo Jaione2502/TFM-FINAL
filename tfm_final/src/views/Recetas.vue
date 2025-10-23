@@ -32,10 +32,15 @@ const recetas = ref([]);
 const error = ref("");
 
 onMounted(async () => {
+  if (!props.apiToken) {
+    error.value = "Token de autenticación no proporcionado";
+    return;
+  }
+
   try {
     const res = await fetch(`${props.apiUrl}/recetas`, {
       headers: {
-        Authorization: props.apiToken ? `Bearer ${props.apiToken}` : "",
+        Authorization: `Bearer ${props.apiToken}`,
         "Content-Type": "application/json",
       },
     });
@@ -49,3 +54,4 @@ onMounted(async () => {
   }
 });
 </script>
+
