@@ -21,20 +21,22 @@ import { ref, onMounted } from "vue";
 import "../assets/styles/Recetas.css";
 
 const props = defineProps({
-  apiUrl: { type: String, default: "http://127.0.0.1:8000/api" },
-  apiToken: { type: String, default: "" },
+  apiToken: String,
+  apiUrl: {
+    type: String,
+    default: "http://127.0.0.1:8000/api"
+  }
 });
 
 const recetas = ref([]);
 const error = ref("");
 
 onMounted(async () => {
-  const token = props.apiToken || localStorage.getItem("token");
-
   try {
     const res = await fetch(`${props.apiUrl}/recetas`, {
       headers: {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: props.apiToken ? `Bearer ${props.apiToken}` : "",
+        "Content-Type": "application/json",
       },
     });
 
