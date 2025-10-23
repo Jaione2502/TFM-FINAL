@@ -74,7 +74,7 @@ describe("Servicios: Menús", () => {
     const payload = { nombre: "Menú actualizado" };
     const respuesta = { id: 4, nombre: "Menú actualizado" };
 
-    fetch.mockResolvedValueOnce({ ok: true, text: async () => JSON.stringify(respuesta), json: async () => respuesta });
+    fetch.mockResolvedValueOnce({ ok: true, json: async () => respuesta });
 
     const data = await actualizarItem("menus", 4, payload);
 
