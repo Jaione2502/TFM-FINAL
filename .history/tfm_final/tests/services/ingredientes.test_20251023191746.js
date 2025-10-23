@@ -76,7 +76,7 @@ describe("Servicios: Ingredientes", () => {
     const payload = { nombre: "Pimentón dulce" };
     const respuesta = { id: 3, nombre: "Pimentón dulce" };
 
-    fetch.mockResolvedValueOnce({ ok: true, text: async () => JSON.stringify(respuesta), json: async () => respuesta });
+    fetch.mockResolvedValueOnce({ ok: true, json: async () => respuesta });
 
     const data = await actualizarItem("ingredientes", 3, payload);
 

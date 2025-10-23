@@ -79,7 +79,7 @@ describe("Servicios: Inventario", () => {
     const payload = { cantidad: 8 };
     const respuesta = { id: 1, cantidad: 8 };
 
-    fetch.mockResolvedValueOnce({ ok: true, text: async () => JSON.stringify(respuesta), json: async () => respuesta });
+    fetch.mockResolvedValueOnce({ ok: true, json: async () => respuesta });
 
     const data = await actualizarItem("inventario", 1, payload);
 
