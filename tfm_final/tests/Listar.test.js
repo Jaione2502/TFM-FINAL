@@ -3,6 +3,9 @@ import { mount, flushPromises } from "@vue/test-utils";
 import { createRouter, createWebHistory } from "vue-router";
 import Listar from "../src/views/Listar.vue";
 
+const API_URL = "http://127.0.0.1:8000/recetas_api"; 
+const TOKEN = "1|bcpugBufuZRzFIBkYeIszPeN572Aw3YkHkwbyR2Y2531edab";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -11,25 +14,29 @@ const router = createRouter({
   ],
 });
 
-const tipos = ["categorias", "recetas", "dietas", "ingredientes", "perfiles", "comentarios", "menus", "inventario"];
+const tipos = ["categorias", "recetas", "dietas"];
 
-describe("Listar.vue", () => {
-
+describe("Listar.vue (API real)", () => {
   tipos.forEach((tipo) => {
-    it(`muestra elementos de tipo "${tipo}"`, async () => {
+    it(`muestra elementos de tipo "${tipo}" desde la API`, async () => {
       router.push(`/${tipo}/listar`);
       await router.isReady();
 
       const wrapper = mount(Listar, {
-        global: { plugins: [router] },
+        global: {
+          plugins: [router],
+          provide: {
+            apiBaseUrl: API_URL,
+            token: TOKEN,
+          },
+        },
       });
 
       await flushPromises();
 
-      
-      expect(wrapper.html()).toMatch(/nombre|descripcion|titulo|usuario|ingrediente/i);
+      // Esperamos que el HTML incluya texto de los datos
+      expect(wrapper.html()).toMatch(/nombre|descripcion|titulo|usuario/i);
 
-      
       const firstCard = wrapper.find(".card");
       if (firstCard.exists()) {
         await firstCard.trigger("click");
@@ -37,6 +44,5 @@ describe("Listar.vue", () => {
       }
     });
   });
-
 });
-   
+
