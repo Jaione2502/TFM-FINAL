@@ -201,7 +201,7 @@ export async function getMenus() {
 export async function getMenuByID(id) {
   const token = localStorage.getItem('token');
 
-  const res = await fetch(`${API_URL}/menus/${id}`, {
+    const res = await fetch(`${API_URL}/inventario`, {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -218,7 +218,7 @@ export async function getMenuByID(id) {
 export async function getInventario() {
   const token = localStorage.getItem('token');
 
-    const res = await fetch(`${API_URL}/inventario`, {
+  const res = await fetch('http://localhost:8000/api/inventario', {
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
