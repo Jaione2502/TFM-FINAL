@@ -22,8 +22,7 @@
 .menu-form {
   flex-direction: column;
   display: flex; 
-  gap: 0.5rem; 
-  margin-bottom: 0.5rem;
+  gap: 10rem; 
 }
 
 .menu-form div {
